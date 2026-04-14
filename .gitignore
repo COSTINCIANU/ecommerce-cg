@@ -33,3 +33,4 @@ routes.txt
 ###< symfony/asset-mapper ###
 .env.docker
 .env.docker
+ecommerce-cg.sql
