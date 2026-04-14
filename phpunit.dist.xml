@@ -16,6 +16,11 @@
         <server name="APP_ENV" value="test" force="true" />
         <server name="SHELL_VERBOSITY" value="-1" />
 
+        <!-- ✅ Ajoute cette ligne — indique à PHPUnit quelle classe Kernel utiliser -->
+        <server name="KERNEL_CLASS" value="App\Kernel" />
+         <!-- ✅ Ajoute MAILER_DSN pour les tests -->
+        <env name="MAILER_DSN" value="null://null" />
+        
         <!-- ###+ stripe/stripe-php ### -->
         <env name="STRIPE_SECRET_KEY" value="sk_test_***"/>
         <!-- ###- stripe/stripe-php ### -->

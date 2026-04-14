@@ -287,9 +287,11 @@ class CartService {
                     "description" => $carrier->getDescription(),
                     "price" => $carrier->getPrice()
                 ];
+                
                 // Je récupere via la session les transporteur 
-                // $this->update("carrier", $carrier);
-            $carrier = $this->update("carrier", $carrier);
+                $this->update("carrier", $carrier);
+
+            // $carrier = $this->update("carrier", $carrier);
         }
 
         $result["carrier"] = $carrier;

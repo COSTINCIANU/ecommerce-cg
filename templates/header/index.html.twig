@@ -1,4 +1,5 @@
 <header  class="header_wrap fixed-top header_with_topbar active">
+{% set setting = app.session.get("setting") %}
     <div  class="top-header" style="">
         <div  class="container">
             <div  class="row align-items-center">
@@ -50,7 +51,12 @@
                                 <i class="ti-mobile"></i>
                                 <span>
                                     {# Telephone site #}
-                                    {{ app.session.get("setting").phone }}
+                                    {# {{ app.session.get("setting").phone }} #}
+                                     {{ setting ? setting.phone : '' }}
+
+                                    {# ✅ Après ? — gère le cas null #}
+                                    {# {{ app.session.get("setting") ? app.session.get("setting").phone : '' }} #}
+
                                 </span>
                             </li>
                         </ul>
@@ -125,7 +131,11 @@
                 <a routerlink="/" class="navbar-brand" href="/">
                     <h2>
                         {# Logo du site #}
-                        {{ app.session.get("setting").websiteName }}
+                        {# {{ app.session.get("setting").websiteName }} #}
+                        {{ setting ? setting.websiteName : 'C.G' }}
+                        
+                        {# ✅ Après ? — gère le cas null #}
+                        {# {{ app.session.get("setting") ? app.session.get("setting").websiteName : 'C.G' }} #}
                     </h2>
                 </a>
                 

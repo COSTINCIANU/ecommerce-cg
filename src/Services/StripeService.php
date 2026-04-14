@@ -5,10 +5,12 @@ namespace App\Services;
 
 use App\Repository\PaymentMethodRepository;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 
 class StripeService
 {
+    private SessionInterface $session;
     /**
      * Initialise le service avec les dépendances injectées.
      * Note : l'accès à la session dans le constructeur est déconseillé

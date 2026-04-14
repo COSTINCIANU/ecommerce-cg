@@ -1,4 +1,6 @@
 <footer class="footer_dark">
+{# Variable intermédiaire pour éviter les erreurs si setting n'est pas en session #}
+    {% set setting = app.session.get("setting") %}
     <div class="footer_top">
         <div class="container">
             <div class="row">
@@ -8,31 +10,42 @@
                             <a href="#">
                                 <h2>  
                                     {# Logo du site #}
-                                    {{ app.session.get("setting").websiteName }}
+                                    {# {{ app.session.get("setting").websiteName }} #}
+                                    {{ setting ? setting.websiteName : 'C.G' }}
                                 </h2>
                             </a>
                         </div>
                         <p> 
                             {# Dans la session on retrouve tous les accessoires et habits pour femmes, jeunes filles etc...  #}
-                            {{ app.session.get("setting").description }}
+                            {# {{ app.session.get("setting").description }} #}
+                              {{ setting ? setting.description : '' }}
                         </p>
                     </div>
                     <div class="widget">
                         <ul class="social_icons social_white">
                             <li>
-                                <a target="_blank" href="{{ app.session.get("setting").facebookLink }}">
+                                <a target="_blank" href="
+                                {# {{ app.session.get("setting").facebookLink }} #}
+                                {{ setting ? setting.facebookLink : '#' }}
+                                ">
                                     <i class="ion-social-facebook"></i>
                                 </a>
                             </li>
                             <li></li>
                             <li></li>
                             <li>
-                                <a target="_blank" href="{{ app.session.get("setting").youtubeLink }}">
+                                <a target="_blank" href="
+                                {# {{ app.session.get("setting").youtubeLink }} #}
+                                {{ setting ? setting.youtubeLink : '#' }}
+                                ">
                                     <i class="ion-social-youtube-outline"></i>
                                 </a>
                             </li>
                             <li>
-                                <a target="_blank" href="{{ app.session.get("setting").instagramLink }}">
+                                <a target="_blank" href="
+                                {# {{ app.session.get("setting").instagramLink }} #}
+                                {{ setting ? setting.instagramLink : '#' }}
+                                ">
                                     <i class="ion-social-instagram-outline"></i>
                                 </a>
                             </li>
@@ -90,22 +103,30 @@
                                 <i class="ti-location-pin"></i>
                                 <p>
                                 {# 21 Ave de la gare 34140 Mèze  #}
-                                    {{ app.session.get("setting").street }}
+                                    {# {{ app.session.get("setting").street }}
                                     {{ app.session.get("setting").codePostal }}
-                                    {{ app.session.get("setting").city }}
+                                    {{ app.session.get("setting").city }} #}
+                                    {{ setting ? setting.street : '' }}
+                                    {{ setting ? setting.codePostal : '' }}
+                                    {{ setting ? setting.city : '' }}
                                 </p>
                             </li>
                             <li>
                                 <i class="ti-email"></i>
-                                    <a href="mailto:{{ app.session.get("setting").email }}">
-                                        {{ app.session.get("setting").email }}
+                                    {# ✅ Correction #}
+                                    <a href="mailto:{{ setting ? setting.email : '' }}
+                                    {# {{ app.session.get("setting").email }} #}
+                                    ">
+                                        {# {{ app.session.get("setting").email }} #}
+                                         {{ setting ? setting.email : '' }}
                                     </a>
                             </li>
                             <li>
                                 <i class="ti-mobile"></i>
                                 <p> 
                                     {# Logo du site #}
-                                    {{ app.session.get("setting").phone }}
+                                    {# {{ app.session.get("setting").phone }} #}
+                                    {{ setting ? setting.phone : '' }}
                                 </p>
                             </li>
                         </ul>

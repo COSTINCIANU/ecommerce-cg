@@ -92,9 +92,12 @@ class Data extends Fixture
         foreach ($categories_json as $categorie_item) {
             # code...
             
+            // ✅ Après — avec slug généré et description je ajouter 
             $category = new Category();
             $category->setName($categorie_item->name)
+                    ->setSlug(strtolower(str_replace(' ', '-', $categorie_item->name)))
                     ->setIsMega($categorie_item->isMega)
+                    ->setDescription('')
             ;
            
             $manager->persist($category);
@@ -145,8 +148,10 @@ class Data extends Fixture
         foreach ($pages_json as $page_item) {
             # code...
             
+            // ✅ Après — avec slug généré ajouter  ->setSlug(strtolower(str_replace(' ', '-', $page_item->title)))
             $page = new Page();
             $page->setTitle($page_item->title)
+                    ->setSlug(strtolower(str_replace(' ', '-', $page_item->title)))
                     ->setContent($page_item->content)
                     ->setIsHead($page_item->isHead)
                     ->setIsFoot($page_item->isFoot)
