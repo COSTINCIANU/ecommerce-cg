@@ -48,8 +48,9 @@ services:
     # Nom du conteneur dans Docker
     container_name: cg_php
     volumes:
-      # Monte ton projet dans le conteneur (synchronisation temps réel)
+      # Monte mon projet dans le conteneur (synchronisation temps réel)
       - .:/var/www/html
+      # - ./public/assets:/var/www/html/public/assets 
     environment:
       # Mode production pour Symfony
       - APP_ENV=prod

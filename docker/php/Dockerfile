@@ -38,6 +38,14 @@ RUN composer install \
     --no-interaction \
     --no-scripts
 
+
+# ✅ Compile les assets CSS/JS avec Webpack Encore
+# RUN npm ci && npm run build
+
+
+# ✅ Compile les assets avec AssetMapper pour la production
+RUN APP_ENV=prod php bin/console asset-map:compile
+
 # Vide le cache Symfony en mode production
 RUN APP_ENV=prod php bin/console cache:clear --no-warmup
 
