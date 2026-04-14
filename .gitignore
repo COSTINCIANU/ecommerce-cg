@@ -1,8 +1,21 @@
 
 ###> symfony/framework-bundle ###
-/.env.local
-/.env.local.php
-/.env.*.local
+.env
+.env.local
+.env.local.php
+.env.*.local
+.env*
+.vscode/
+database_uml
+
+# Fichiers personnels
+database_ulm.txt
+Note Memoire.txt
+test_mail.php
+
+
+
+
 /config/secrets/prod/prod.decrypt.private.php
 /public/bundles/
 /var/

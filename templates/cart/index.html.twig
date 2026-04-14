@@ -1,0 +1,102 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}C.G | Panier {% endblock %}
+
+{% block body %}
+
+{# Inclusion de la template qui se affiche sur la page #}
+{% include "page_head/page_head.html.twig" with {'page_name': 'Panier'} %}
+
+
+<div class="main_content cart_content" data-cart="{{cart_json}}" data-carriers="{{carriers_json}}">
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="table-responsive shop_cart_table">
+                        <table  class="table">
+                            <thead >
+                                <tr >
+                                    <th class="product-thumbnail">&nbsp;</th>
+                                    <th class="product-name">Produit</th>
+                                    <th class="product-price">Prix</th>
+                                    <th class="product-quantity">Quantité</th>
+                                    <th class="product-subtotal">Taxe</th>
+                                    <th class="product-subtotal">Total HT</th>
+                                    <th class="product-subtotal">Total TTC</th>
+                                    <th class="product-remove">Retirer</th>
+                                </tr>
+                            </thead>
+                            <tbody >
+                            
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="medium_divider"></div>
+                    <div class="divider center_icon">
+                        <i class="ti-shopping-cart-full"></i>
+                    </div>
+                    <div class="medium_divider"></div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="border p-3 p-md-4 carrier_form">
+                        <div class="heading_s1 mb-3">
+                            <h6>Choisissez votre transporteur</h6>
+                        </div>
+                        <form action="/cart/carrier" method="post">
+                            <select name="carrierId" value="{{cart.carrier.id}}" id="carrier" class="form-control">
+
+
+
+                            </select>
+
+
+
+
+                        </form>
+                     </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="border p-3 p-md-4">
+                        <div class="heading_s1 mb-3">
+                            <h6>Total du panier</h6>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td class="cart_total_label">Sous-total HT</td>
+                                        <td class="cart_sub_total_ht_amount"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="cart_total_label">Taxe</td>
+                                        <td class="cart_sub_total_taxe_amount"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="cart_total_label">Expédition</td>
+                                        <td class="cart_shipping_total_amount">Livraison gratuite</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="cart_total_label">Total TTC</td>
+                                        <td class="cart_total_amount"><strong></strong></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                            <a routerlink="/checkout" class="btn btn-fill-out" href="/checkout">Passer à la caisse</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+

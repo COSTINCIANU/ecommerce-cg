@@ -1,0 +1,102 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Répondre à {{ contact.email }}{% endblock %}
+
+{% block body %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+
+            {# Bouton retour #}
+            <a href="{{ path('admin') }}" class="btn btn-secondary btn-sm mb-4">
+                ← Retour au dashboard
+            </a>
+
+            {# Message original #}
+            <div class="card border-0 mb-4"
+                 style="box-shadow: 0 2px 15px rgba(0,0,0,0.08);">
+                <div class="card-header border-0 py-3"
+                     style="background: #292b2c; border-radius: 8px 8px 0 0;">
+                    <h5 style="color: white; font-family: Roboto;
+                               font-weight: 700; margin: 0;">
+                        Message de {{ contact.email }}
+                    </h5>
+                    <small style="color: #aaa; font-family: Poppins; font-size: 12px;">
+                        Reçu le {{ contact.createdAt|date('d/m/Y à H:i') }}
+                    </small>
+                </div>
+                <div class="card-body p-4">
+                    <p style="color: #687188; font-family: Poppins;">
+                        <strong style="color: #292b2c;">Sujet :</strong>
+                        {{ contact.subject }}
+                    </p>
+                    <p style="color: #687188; font-family: Poppins; line-height: 28px;">
+                        {{ contact.content|raw }}
+                    </p>
+                </div>
+            </div>
+
+            {# Si déjà répondu #}
+            {% if contact.respondedAt %}
+                <div class="p-4 mb-4"
+                     style="background: #f8f9fa; border-left: 4px solid #28a745;
+                            border-radius: 4px;">
+                    <strong style="color: #292b2c; font-family: Roboto;">
+                        Réponse envoyée le {{ contact.respondedAt|date('d/m/Y à H:i') }} :
+                    </strong>
+                    <p style="color: #687188; font-family: Poppins;
+                              margin-top: 10px; margin-bottom: 0;">
+                        {{ contact.response|raw }}
+                    </p>
+                </div>
+
+            {% else %}
+                {# Formulaire de réponse #}
+                <div class="card border-0"
+                     style="box-shadow: 0 2px 15px rgba(0,0,0,0.08);">
+                    <div class="card-header border-0 py-3"
+                         style="background: #fff;
+                                border-bottom: 2px solid #FF324D !important;">
+                        <h5 style="font-family: Roboto; color: #292b2c;
+                                   font-weight: 700; margin: 0;">
+                            Votre réponse
+                        </h5>
+                    </div>
+                    <div class="card-body p-4">
+
+                        {{ form_start(form) }}
+
+                            <div class="mb-4">
+                                {{ form_widget(form.response, {
+                                    'attr': {
+                                        'class': 'form-control',
+                                        'style': 'border: 1px solid #e0e0e0;
+                                                  border-radius: 4px;
+                                                  font-family: Poppins;
+                                                  color: #687188; padding: 12px;'
+                                    }
+                                }) }}
+                                {{ form_errors(form.response) }}
+                            </div>
+
+                            {{ form_widget(form.submit, {
+                                'attr': {
+                                    'style': 'background: #FF324D; border: none;
+                                              color: white; padding: 12px 30px;
+                                              border-radius: 4px; font-family: Poppins;
+                                              font-weight: 600; font-size: 14px;
+                                              cursor: pointer; text-transform: uppercase;
+                                              letter-spacing: 1px;'
+                                }
+                            }) }}
+
+                        {{ form_end(form) }}
+
+                    </div>
+                </div>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -6,27 +6,33 @@
                     <div class="widget">
                         <div class="footer_logo">
                             <a href="#">
-                                <h2 >C.G</h2>
+                                <h2>  
+                                    {# Logo du site #}
+                                    {{ app.session.get("setting").websiteName }}
+                                </h2>
                             </a>
                         </div>
-                        <p> Retrouvez tous les accessoires et habits pour femmes, jeunes filles etc... </p>
+                        <p> 
+                            {# Dans la session on retrouve tous les accessoires et habits pour femmes, jeunes filles etc...  #}
+                            {{ app.session.get("setting").description }}
+                        </p>
                     </div>
                     <div class="widget">
                         <ul class="social_icons social_white">
                             <li>
-                                <a target="_blank" href="https://facebook.com">
+                                <a target="_blank" href="{{ app.session.get("setting").facebookLink }}">
                                     <i class="ion-social-facebook"></i>
                                 </a>
                             </li>
                             <li></li>
                             <li></li>
                             <li>
-                                <a target="_blank" href="https://www.youtube.com/channel/UCkqALrIVPEyGnnbmiFl3lQA/?sub_confirmation=1">
+                                <a target="_blank" href="{{ app.session.get("setting").youtubeLink }}">
                                     <i class="ion-social-youtube-outline"></i>
                                 </a>
                             </li>
                             <li>
-                                <a target="_blank" href="https://www.instagram.com/mudey_formation/">
+                                <a target="_blank" href="{{ app.session.get("setting").instagramLink }}">
                                     <i class="ion-social-instagram-outline"></i>
                                 </a>
                             </li>
@@ -35,38 +41,44 @@
                 </div>
                 <div class="col-lg-2 col-md-3 col-sm-6">
                     <div class="widget">
-                        <h6 class="widget_title">Useful Links</h6>
+                        <h6 class="widget_title">Liens utiles</h6>
                         <ul class="widget_links">
-                            <li><a href="/page/a-propos-de-nous-shop">A Propos de nous</a></li>
+                            {# Je récupere les pages que j'ai stocker  dans la session #}
+                            {% for page in app.session.get("footerPages") %}
+                            <li>
+                                <a href="/page/{{ page.slug }}">{{ page.title }}</a>
+                            </li>
+                            {% endfor %}
+                            {# <li><a href="/page/a-propos-de-nous-shop">A Propos de nous</a></li>
                             <li><a href="/page/nos-services-jstore">Nos services</a></li>
                             <li><a href="/page/contactez-nous-category">Contactez-Nous</a></li>
                             <li><a href="/page/nos-partenaires-mudey">Nos partenaires</a></li>
-                            <li><a href="/page/mentions-lgales-espero">Mentions légales</a></li>
+                            <li><a href="/page/mentions-lgales-espero">Mentions légales</a></li> #}
                         </ul>
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-3 col-sm-6">
                     <div class="widget">
-                        <h6 class="widget_title">Category</h6>
+                        <h6 class="widget_title">Catégorie</h6>
                         <ul class="widget_links">
-                            <li><a href="#">Men</a></li>
-                            <li><a href="#">Woman</a></li>
-                            <li><a href="#">Kids</a></li>
-                            <li><a href="#">Best Saller</a>
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">Femme</a></li>
+                            <li><a href="#">Enfants</a></li>
+                            <li><a href="#">Meilleur vendeur</a>
                             </li>
-                            <li><a href="#">New Arrivals</a>
+                            <li><a href="#">Nouveautés</a>
                             </li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-6 col-sm-6">
                     <div class="widget">
-                        <h6 class="widget_title">My Account</h6>
+                        <h6 class="widget_title">Mon compte</h6>
                         <ul class="widget_links">
-                            <li><a href="/account">My Account</a></li>
-                            <li><a href="/terms">Terms</a></li>
-                            <li><a href="/signin">SignIn</a></li>
-                            <li><a href="/signup">Signup</a></li>
+                            <li><a href="/account">Mon compte</a></li>
+                            <li><a href="/terms">Termes</a></li>
+                            <li><a href="/signin">Se connecter</a></li>
+                            <li><a href="/signup">S'inscrire</a></li>
                         </ul>
                     </div>
                 </div>
@@ -76,15 +88,25 @@
                         <ul class="contact_info contact_info_light">
                             <li>
                                 <i class="ti-location-pin"></i>
-                                <p>21 Ave de la gare 34140 Mèze </p>
+                                <p>
+                                {# 21 Ave de la gare 34140 Mèze  #}
+                                    {{ app.session.get("setting").street }}
+                                    {{ app.session.get("setting").codePostal }}
+                                    {{ app.session.get("setting").city }}
+                                </p>
                             </li>
                             <li>
                                 <i class="ti-email"></i>
-                                <a href="mailto:contact@jstore.fr">c.g@contact.fr</a>
+                                    <a href="mailto:{{ app.session.get("setting").email }}">
+                                        {{ app.session.get("setting").email }}
+                                    </a>
                             </li>
                             <li>
                                 <i class="ti-mobile"></i>
-                                <p>+33 7 49 31 69 74</p>
+                                <p> 
+                                    {# Logo du site #}
+                                    {{ app.session.get("setting").phone }}
+                                </p>
                             </li>
                         </ul>
                     </div>

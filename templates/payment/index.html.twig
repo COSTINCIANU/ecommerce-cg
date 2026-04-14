@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}C.G | Paiement Succès  {% endblock %}
+
+{% block body %}
+
+{# Inclusion de la template qui se affiche sur la page #}
+{% include "page_head/page_head.html.twig" with {'page_name': "Commande terminée" } %}
+
+<div class="section">
+	<div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="text-center order_complete">
+                	<i class="fas fa-check-circle"></i>
+                    <div class="heading_s1">
+                  	<h3>Votre commande est terminée !</h3>
+                    </div>
+                  	<p>Merci pour votre commande ! Votre commande est en cours de traitement et sera complétée dans les 3-6 heures. Vous recevrez un email de confirmation lorsque votre commande sera complétée.</p>
+                    <a href="/" class="btn btn-fill-out">Continuer vos achats</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

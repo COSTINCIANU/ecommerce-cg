@@ -1,0 +1,16 @@
+{% for order in orders %}
+    <tr>
+        <td>{{ order.reference }}</td>
+        <td>{{ order.createdAt|date('d/m/Y') }}</td>
+        <td>{{ order.totalPrice|number_format(2, ',', ' ') }} €</td>
+        <td>{{ order.status }}</td>
+        <td>
+            {% if order.status == 'paid' %}
+                <a href="{{ path('app_order_invoice', {id: order.id}) }}"
+                   class="btn btn-sm btn-outline-primary">
+                    Télécharger la facture PDF
+                </a>
+            {% endif %}
+        </td>
+    </tr>
+{% endfor %}

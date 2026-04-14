@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}C.G | Produit Wish list{% endblock %}
+
+{% block body %}
+
+{# Inclusion de la template qui se affiche sur la page #}
+{% include "page_head/page_head.html.twig" with {'page_name': 'Wish List'} %}
+
+<div  class="main_content wishlist_content" data-wishlist="{{wishlist_json}}">
+    <div  class="section">
+        <div  class="container">
+            <div  class="row">
+                <div  class="col-12">
+                    <div  class="table-responsive wishlist_table">
+                        <table  class="table">
+                            <thead >
+                                <tr >
+                                    <th  class="product-thumbnail">&nbsp;</th>
+                                    <th  class="product-name">Produit</th>
+                                    <th  class="product-price">Prix</th>
+                                    <th  class="product-stock-status">État des stocks</th>
+                                    <th  class="product-add-to-cart"></th>
+                                    <th  class="product-remove">Retirer</th>
+                                </tr>
+                            </thead>
+                            <tbody >
+                            {# {% for product in wishlist %}                                
+                                <tr >
+                                    <td class="product-thumbnail">
+                                        <a href="#">
+                                            <img width="50" height="50" alt="product1" src="/assets/images/products/{{ product.imageUrls[0] }}">
+                                        </a>
+                                    </td>
+                                    <td data-title="Product" class="product-name">
+                                        <a href="#">{{ product.name }}</a>
+                                    </td>
+                                    <td data-title="Price" class="product-price">
+                                        {{ (product.soldePrice / 100) | format_currency('EUR') }}
+                                    </td>
+                                    <td data-title="Stock Status" class="product-stock-status">
+                                        {{ product.stock }}
+                                        <span class="badge badge-pill badge-success">En stock</span>
+                                    </td>
+                                    <td class="product-add-to-cart">
+                                        <a href="/cart/add/{{ product.id }}/1" class="btn btn-fill-out btn-addtocart">
+                                            <i class="icon-basket-loaded"></i>
+                                                Ajouter au panier
+                                        </a>
+                                    </td>
+                                    <td data-title="Remove" class="product-remove">
+                                        <a href="/wishlist/remove/{{ product.id }}">
+                                            <i class="ti-close"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %} #}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

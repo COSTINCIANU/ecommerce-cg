@@ -1,0 +1,108 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contactez-nous — C.G{% endblock %}
+
+{% block body %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+
+            {# En-tête #}
+            <div class="text-center mb-5">
+                <h1 class="fw-bold">Contactez-nous</h1>
+                <p class="text-muted">
+                    Une question ? N'hésitez pas à nous écrire,
+                    nous vous répondrons dans les plus brefs délais.
+                </p>
+            </div>
+
+            {# Messages flash #}
+            {% for type, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ type == 'success' ? 'success' : (type == 'warning' ? 'warning' : 'danger') }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+
+            {# Formulaire #}
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4 p-md-5">
+
+                    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+                        <div class="row g-3">
+
+                            {# Email #}
+                            <div class="col-12">
+                                {{ form_label(form.email, null, {
+                                    'label_attr': {'class': 'form-label fw-bold'}
+                                }) }}
+                                {{ form_widget(form.email) }}
+                                {{ form_errors(form.email) }}
+                            </div>
+
+                            {# Sujet #}
+                            <div class="col-12">
+                                {{ form_label(form.subject, null, {
+                                    'label_attr': {'class': 'form-label fw-bold'}
+                                }) }}
+                                {{ form_widget(form.subject) }}
+                                {{ form_errors(form.subject) }}
+                            </div>
+
+                            {# Message #}
+                            <div class="col-12">
+                                {{ form_label(form.content, null, {
+                                    'label_attr': {'class': 'form-label fw-bold'}
+                                }) }}
+                                {{ form_widget(form.content) }}
+                                {{ form_errors(form.content) }}
+                            </div>
+
+                            {# Bouton envoi #}
+                            <div class="col-12">
+                                {{ form_widget(form.submit) }}
+                            </div>
+
+                        </div>
+
+                    {{ form_end(form) }}
+
+                </div>
+            </div>
+
+            {# Infos contact #}
+            <div class="row g-3 mt-4 text-center">
+                <div class="col-md-4">
+                    <div class="p-3">
+                        <div class="fs-4 mb-2">📍</div>
+                        <div class="fw-bold small">Adresse</div>
+                        <div class="text-muted small">
+                            Impasse du Couchant<br>34140 Mèze
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="p-3">
+                        <div class="fs-4 mb-2">📞</div>
+                        <div class="fw-bold small">Téléphone</div>
+                        <div class="text-muted small">06 14 22 51 47</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="p-3">
+                        <div class="fs-4 mb-2">✉️</div>
+                        <div class="fw-bold small">Email</div>
+                        <div class="text-muted small">
+                            gheorghina.costincianu@sfr.fr
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

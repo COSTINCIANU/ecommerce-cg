@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: Arial, sans-serif; font-size: 14px; color: #333; }
+        .header { background: #1A237E; color: white; padding: 20px; text-align: center; }
+        .content { padding: 30px; }
+        .recap { background: #f5f7ff; border-left: 4px solid #1A237E;
+                 padding: 16px; border-radius: 4px; margin: 20px 0; }
+        .footer { text-align: center; padding: 20px;
+                  font-size: 12px; color: #999; border-top: 1px solid #eee; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h2>C.G — Confirmation de votre message</h2>
+    </div>
+    <div class="content">
+
+        <p>Bonjour,</p>
+
+        <p>
+            Nous avons bien reçu votre message et nous vous en remercions.
+            Notre équipe vous répondra dans les plus brefs délais.
+        </p>
+
+        <div class="recap">
+            <strong>Récapitulatif de votre message :</strong><br><br>
+            <strong>Sujet :</strong> {{ contact.subject }}<br><br>
+            <strong>Message :</strong><br>
+            {{ contact.content }}
+        </div>
+
+        <p>
+            Si vous avez une question urgente, vous pouvez nous joindre
+            directement au <strong>06 14 22 51 47</strong>.
+        </p>
+
+        <p>Cordialement,<br><strong>L'équipe C.G</strong></p>
+
+    </div>
+    <div class="footer">
+        C.G — Impasse du Couchant, 34140 Mèze<br>
+        gheorghina.costincianu@sfr.fr
+    </div>
+</body>
+</html>

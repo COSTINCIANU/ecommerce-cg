@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}C.G | {{ page.title }}{% endblock %}
+
+{% block body %}
+{# Inclusion de la template qui se affiche sur la page #}
+{% include "page_head/page_head.html.twig" with {'page_name': page.title } %}
+<div  class="main_content">
+    <div  class="section">
+        <div  class="container">
+            {{ page.content | raw }}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 13px;
+            color: #333;
+            padding: 40px;
+        }
+
+        /* ── EN-TÊTE ── */
+        .header {
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #FF324D;
+        }
+        .company-name {
+            font-size: 32px;
+            font-weight: bold;
+            color: #FF324D;
+            letter-spacing: 2px;
+        }
+        .company-info {
+            font-size: 11px;
+            color: #687188;
+            margin-top: 8px;
+            line-height: 1.8;
+        }
+        .invoice-box {
+            float: right;
+            text-align: right;
+            margin-top: -10px;
+        }
+        .invoice-box h1 {
+            font-size: 36px;
+            color: #292b2c;
+            font-weight: bold;
+            letter-spacing: 3px;
+        }
+        .invoice-box .invoice-num {
+            font-size: 13px;
+            color: #687188;
+            margin-top: 4px;
+        }
+        .invoice-box .invoice-date {
+            font-size: 13px;
+            color: #687188;
+            margin-top: 2px;
+        }
+        .badge-paid {
+            display: inline-block;
+            background: #e1f5ee;
+            color: #085041;
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+            margin-top: 8px;
+            border: 1px solid #9FE1CB;
+        }
+        .clearfix { clear: both; }
+
+        /* ── INFOS CLIENT ── */
+        .meta {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 6px;
+        }
+        .meta-block {
+            display: inline-block;
+            width: 48%;
+            vertical-align: top;
+        }
+        .meta-block h3 {
+            font-size: 10px;
+            text-transform: uppercase;
+            color: #FF324D;
+            letter-spacing: 1.5px;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        .meta-block p {
+            font-size: 12px;
+            line-height: 1.8;
+            color: #292b2c;
+        }
+
+        /* ── TABLEAU PRODUITS ── */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+        thead tr {
+            background: #292b2c;
+            color: white;
+        }
+        thead th {
+            padding: 12px 14px;
+            text-align: left;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        tbody tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        tbody tr:hover {
+            background: #fff5f6;
+        }
+        tbody td {
+            padding: 12px 14px;
+            border-bottom: 1px solid #eee;
+            font-size: 12px;
+            color: #292b2c;
+        }
+
+        /* ── TOTAUX ── */
+        .totals-wrapper {
+            float: right;
+            width: 300px;
+            margin-top: 10px;
+        }
+        .totals-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .totals-table td {
+            padding: 8px 14px;
+            font-size: 12px;
+            border-bottom: 1px solid #eee;
+        }
+        .totals-table .row-label {
+            color: #687188;
+        }
+        .totals-table .row-value {
+            text-align: right;
+            color: #292b2c;
+            font-weight: 500;
+        }
+        .totals-table .row-ttc td {
+            background: #FF324D;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+            border-bottom: none;
+        }
+
+        /* ── PIED DE PAGE ── */
+        .footer {
+            margin-top: 60px;
+            text-align: center;
+            font-size: 10px;
+            color: #999;
+            border-top: 1px solid #eee;
+            padding-top: 16px;
+            line-height: 1.8;
+        }
+        .footer strong {
+            color: #FF324D;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- EN-TÊTE -->
+    <div class="header">
+        <div style="float: left;">
+            <div class="company-name">C.G</div>
+            <div class="company-info">
+                Impasse du Couchant<br>
+                34140 Mèze, France<br>
+                costincianu.gheorghina@gmail.com<br>
+                06 14 22 51 47
+            </div>
+        </div>
+        <div class="invoice-box">
+            <h1>FACTURE</h1>
+            <div class="invoice-num">N° {{ '%05d'|format(order.id) }}</div>
+            <div class="invoice-date">Date : {{ order.createdAt|date('d/m/Y') }}</div>
+            <br>
+            <span class="badge-paid">PAYÉE</span>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+    <!-- INFOS CLIENT -->
+    <div class="meta">
+        <div class="meta-block">
+            <h3>Facturé à</h3>
+            <p>
+                <strong>{{ user.fullName }}</strong><br>
+                {{ user.email }}<br>
+                {% set address = user.addresses|first %}
+                {% if address %}
+                    {{ address.street }}<br>
+                    {{ address.codePostal }} {{ address.city }}<br>
+                    {{ address.state }}
+                {% else %}
+                    Adresse non renseignée
+                {% endif %}
+            </p>
+        </div>
+        <div class="meta-block" style="text-align: right;">
+            <h3>Mode de livraison</h3>
+            <p>
+                <strong>{{ order.carrierName }}</strong><br>
+                Frais : {{ (order.carrierPrice / 100)|number_format(2, ',', ' ') }} €
+            </p>
+        </div>
+    </div>
+
+    <!-- TABLEAU DES PRODUITS -->
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 35%;">Produit</th>
+                <th style="width: 30%;">Description</th>
+                <th style="text-align: center; width: 10%;">Qté</th>
+                <th style="text-align: right; width: 12%;">Prix unit.</th>
+                <th style="text-align: right; width: 13%;">Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for detail in order.orderDetails %}
+                <tr>
+                    <td><strong>{{ detail.productName }}</strong></td>
+                    <td style="color: #687188; font-size: 11px;">
+                        {{ detail.productDescription|slice(0, 40) }}
+                        {% if detail.productDescription|length > 40 %}...{% endif %}
+                    </td>
+                    <td style="text-align: center;">
+                        {{ detail.quantity }}
+                    </td>
+                    <td style="text-align: right;">
+                        {{ (detail.productSoldePrice / 100)|number_format(2, ',', ' ') }} €
+                    </td>
+                    <td style="text-align: right; font-weight: bold;">
+                        {{ (detail.subtotal / 100)|number_format(2, ',', ' ') }} €
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- TOTAUX -->
+    {% set tva_amount = order.orderCostTtc - order.orderCostHt - order.carrierPrice %}
+    <div class="totals-wrapper">
+        <table class="totals-table">
+            <tr>
+                <td class="row-label">Total HT</td>
+                <td class="row-value">
+                    {{ (order.orderCostHt / 100)|number_format(2, ',', ' ') }} €
+                </td>
+            </tr>
+            <tr>
+                <td class="row-label">TVA (20%)</td>
+                <td class="row-value">
+                    {{ (tva_amount / 100)|number_format(2, ',', ' ') }} €
+                </td>
+            </tr>
+            <tr>
+                <td class="row-label">Frais de port</td>
+                <td class="row-value">
+                    {{ (order.carrierPrice / 100)|number_format(2, ',', ' ') }} €
+                </td>
+            </tr>
+            <tr class="row-ttc">
+                <td>Total TTC</td>
+                <td style="text-align: right;">
+                    {{ (order.orderCostTtc / 100)|number_format(2, ',', ' ') }} €
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="clearfix"></div>
+
+    <!-- PIED DE PAGE -->
+    <div class="footer">
+        <strong>C.G</strong> — Boutique de vêtements féminins<br>
+        Impasse du Couchant, 34140 Mèze, France<br>
+        costincianu.gheorghina@gmail.com — 06 14 22 51 47<br><br>
+        Cette facture fait foi de paiement. Merci pour votre confiance !
+    </div>
+
+</body>
+</html>

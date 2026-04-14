@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Messages de contact — Admin{% endblock %}
+
+{% block body %}
+<div class="container py-5">
+
+    <h2 class="fw-bold mb-4" style="font-family: Roboto; color: #292b2c;">
+        Messages de contact
+        <span class="badge ms-2" style="background: #FF324D; font-size: 14px;">
+            {{ contacts|length }}
+        </span>
+    </h2>
+
+    {# Messages flash #}
+    {% for type, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{ type }} alert-dismissible fade show">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+    {% if contacts is empty %}
+        <p style="color: #687188; font-family: Poppins;">
+            Aucun message reçu pour le moment.
+        </p>
+    {% else %}
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead style="background: #292b2c; color: white;">
+                    <tr>
+                        <th>Date</th>
+                        <th>Email</th>
+                        <th>Sujet</th>
+                        <th>Statut</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for contact in contacts %}
+                        <tr>
+                            <td style="color: #687188; font-size: 13px;">
+                                {{ contact.created_at|date('d/m/Y H:i') }}
+                            </td>
+                            <td style="color: #292b2c; font-weight: 600;">
+                                {{ contact.email }}
+                            </td>
+                            <td style="color: #687188;">
+                                {{ contact.subject }}
+                            </td>
+                            <td>
+                                {% if contact.respondedAt %}
+                                    <span class="badge"
+                                          style="background: #28a745;">
+                                        Répondu le {{ contact.respondedAt|date('d/m/Y') }}
+                                    </span>
+                                {% else %}
+                                    <span class="badge"
+                                          style="background: #FF324D;">
+                                        En attente
+                                    </span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a href="{{ path('app_admin_contact_reply', {id: contact.id}) }}"
+                                   class="btn btn-sm"
+                                   style="background: #FF324D; color: white;
+                                          font-family: Poppins; font-size: 12px;">
+                                    {% if contact.respondedAt %}
+                                        Voir
+                                    {% else %}
+                                        Répondre
+                                    {% endif %}
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+
+</div>
+{% endblock %}

@@ -2,6 +2,8 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
         <title>{% block title %}C.G | E-commerce{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
        
@@ -35,8 +37,19 @@
         {# Inclusion de header sur toutes les page  #}
         {% include("header/index.html.twig") %}
         {% block body %}{% endblock %}
+
+
+        {# Message flash  #}
+        <div class="notification">
+
+        </div>
+
+
         {# Inclusion de footer sur toutes les page  #}
         {% include("footer/index.html.twig") %}
+
+
+        
         <!-- script js  -->
         <script src="/assets/js/jquery-3.6.0.min.js"></script>
         <script src="/assets/js/popper.min.js"></script>
@@ -52,5 +65,9 @@
         <script src="/assets/js/slick.min.js"></script>
         <script src="/assets/js/jquery.elevatezoom.js"></script>
         <script src="/assets/js/scripts.js"></script>
+        <script type="module" src="/assets/js/cart.js"></script>
+        <script type="module" src="/assets/js/compare.js"></script>
+        
+
     </body>
 </html>

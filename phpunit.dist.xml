@@ -15,6 +15,15 @@
         <ini name="error_reporting" value="-1" />
         <server name="APP_ENV" value="test" force="true" />
         <server name="SHELL_VERBOSITY" value="-1" />
+
+        <!-- ###+ stripe/stripe-php ### -->
+        <env name="STRIPE_SECRET_KEY" value="sk_test_***"/>
+        <!-- ###- stripe/stripe-php ### -->
+
+        <!-- ###+ symfony/mailjet-mailer ### -->
+        <!-- MAILER_DSN=mailjet+api://PUBLIC_KEY:PRIVATE_KEY@api.mailjet.com -->
+        <!-- #MAILER_DSN=mailjet+smtp://PUBLIC_KEY:PRIVATE_KEY@in-v3.mailjet.com -->
+        <!-- ###- symfony/mailjet-mailer ### -->
     </php>
 
     <testsuites>
