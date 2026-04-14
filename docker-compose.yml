@@ -1,0 +1,138 @@
+# ═══════════════════════════════════════════════════════════════
+# Docker Compose — C.G Boutique E-commerce
+# Orchestre 4 conteneurs : nginx, php, mysql, phpmyadmin
+# Auteur : Gheorghina Costincianu
+# ═══════════════════════════════════════════════════════════════
+
+# Version de la syntaxe Docker Compose
+version: '3.8'
+
+services:
+
+  # ──────────────────────────────────────────────────────────────
+  # CONTENEUR 1 — NGINX (Serveur Web)
+  # Reçoit les requêtes HTTP et les transmet à PHP
+  # Accessible sur http://localhost:8080
+  # ──────────────────────────────────────────────────────────────
+  nginx:
+    # Image officielle Nginx légère basée sur Alpine Linux
+    image: nginx:alpine
+    # Nom du conteneur dans Docker
+    container_name: cg_nginx
+    ports:
+      # Port 8080 de ta machine → Port 80 du conteneur
+      - "8080:80"
+    volumes:
+      # Monte ton projet dans le conteneur
+      - .:/var/www/html
+      # Monte la configuration Nginx personnalisée
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      # Nginx démarre seulement après PHP
+      - php
+    networks:
+      # Connecté au réseau interne Docker
+      - cg_network
+
+  # ──────────────────────────────────────────────────────────────
+  # CONTENEUR 2 — PHP 8.2 FPM (Application Symfony)
+  # Exécute le code PHP de ton application Symfony
+  # Construit depuis le Dockerfile personnalisé
+  # ──────────────────────────────────────────────────────────────
+  php:
+    build:
+      # Dossier racine du projet comme contexte de build
+      context: .
+      # Fichier Dockerfile à utiliser pour construire l'image
+      dockerfile: docker/php/Dockerfile
+    # Nom du conteneur dans Docker
+    container_name: cg_php
+    volumes:
+      # Monte ton projet dans le conteneur (synchronisation temps réel)
+      - .:/var/www/html
+    environment:
+      # Mode production pour Symfony
+      - APP_ENV=prod
+      # Clé secrète Symfony (récupérée depuis .env.docker)
+      - APP_SECRET=${APP_SECRET}
+      # URL de connexion à la BDD MySQL dans Docker
+      # Format : mysql://user:password@host:port/database
+      - DATABASE_URL=mysql://cg_user:cg_password@mysql:3306/ecommerce_cg?serverVersion=8.0
+      # Configuration email Mailjet pour la production
+      - MAILER_DSN=${MAILER_DSN}
+      # Clé secrète Stripe pour les paiements
+      - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
+    depends_on:
+      # PHP démarre seulement après MySQL
+      - mysql
+    networks:
+      - cg_network
+
+  # ──────────────────────────────────────────────────────────────
+  # CONTENEUR 3 — MySQL 8.0 (Base de données)
+  # Stocke toutes les données de la boutique
+  # Accessible sur le port 3307 de ta machine
+  # ──────────────────────────────────────────────────────────────
+  mysql:
+    # Image officielle MySQL version 8.0
+    image: mysql:8.0
+    # Nom du conteneur dans Docker
+    container_name: cg_mysql
+    environment:
+      # Mot de passe du super admin MySQL
+      MYSQL_ROOT_PASSWORD: root_password
+      # Nom de la base de données créée automatiquement
+      MYSQL_DATABASE: ecommerce_cg
+      # Utilisateur créé automatiquement pour l'application
+      MYSQL_USER: cg_user
+      # Mot de passe de l'utilisateur applicatif
+      MYSQL_PASSWORD: cg_password
+    ports:
+      # Port 3307 de ta machine → Port 3306 du conteneur
+      # On utilise 3307 pour éviter le conflit avec ton MySQL local
+      - "3307:3306"
+    volumes:
+      # Volume persistant pour conserver les données même si le conteneur redémarre
+      - cg_mysql_data:/var/lib/mysql
+    networks:
+      - cg_network
+
+  # ──────────────────────────────────────────────────────────────
+  # CONTENEUR 4 — PhpMyAdmin (Interface graphique BDD)
+  # Permet de gérer la BDD via navigateur
+  # Accessible sur http://localhost:8081
+  # ──────────────────────────────────────────────────────────────
+  phpmyadmin:
+    # Image officielle PhpMyAdmin
+    image: phpmyadmin:latest
+    # Nom du conteneur dans Docker
+    container_name: cg_phpmyadmin
+    ports:
+      # Port 8081 de ta machine → Port 80 du conteneur
+      - "8081:80"
+    environment:
+      # Adresse du serveur MySQL (nom du service Docker)
+      PMA_HOST: mysql
+      # Identifiants de connexion à MySQL
+      PMA_USER: cg_user
+      PMA_PASSWORD: cg_password
+    depends_on:
+      # PhpMyAdmin démarre seulement après MySQL
+      - mysql
+    networks:
+      - cg_network
+
+# ──────────────────────────────────────────────────────────────
+# VOLUMES — Stockage persistant
+# Les données MySQL survivent aux redémarrages des conteneurs
+# ──────────────────────────────────────────────────────────────
+volumes:
+  cg_mysql_data:
+
+# ──────────────────────────────────────────────────────────────
+# RÉSEAU — Communication entre conteneurs
+# Tous les conteneurs communiquent via ce réseau interne
+# ──────────────────────────────────────────────────────────────
+networks:
+  cg_network:
+    driver: bridge

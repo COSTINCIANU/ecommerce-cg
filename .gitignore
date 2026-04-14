@@ -32,3 +32,4 @@ routes.txt
 /assets/vendor/
 ###< symfony/asset-mapper ###
 .env.docker
+.env.docker

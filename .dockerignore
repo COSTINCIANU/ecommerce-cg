@@ -1,0 +1,13 @@
+vendor/
+node_modules/
+var/cache/
+var/log/
+.git/
+tests/
+cypress/
+ecommerce-cg.sql
+.env.local
+.env.test.local
+.env.docker
+cypress/screenshots/
+cypress/videos/
