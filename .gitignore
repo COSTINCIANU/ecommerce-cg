@@ -12,7 +12,7 @@ database_uml
 database_ulm.txt
 Note Memoire.txt
 test_mail.php
-
+routes.txt
 
 
 
@@ -31,3 +31,4 @@ test_mail.php
 /public/assets/
 /assets/vendor/
 ###< symfony/asset-mapper ###
+.env.docker
