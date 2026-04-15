@@ -58,7 +58,7 @@ jobs:
           key: ${{ runner.os }}-composer-${{ hashFiles('composer.lock') }}
           restore-keys: ${{ runner.os }}-composer-
 
-      # ✅ Étape 3.5 — Crée le fichier .env AVANT composer install
+      # ✅ Étape 4 — Crée le fichier .env AVANT composer install
       - name: Create .env
         run: |
           echo "APP_ENV=test" > .env
@@ -69,32 +69,37 @@ jobs:
           echo "MESSENGER_TRANSPORT_DSN=doctrine://default?auto_setup=0" >> .env
           echo "DEFAULT_URI=http://localhost" >> .env
 
-      # Étape 4 — Installe les dépendances PHP
+      # Étape 5 — Installe les dépendances PHP
       - name: Install Composer dependencies
         run: composer install --no-progress --prefer-dist --optimize-autoloader
 
-      # Étape 5 — Crée le fichier .env.test.local pour les tests
+      # Étape 6 — Crée le fichier .env.test.local pour les tests
       - name: Create .env.test.local
         run: |
           echo "DATABASE_URL=mysql://test_user:test_password@127.0.0.1:3306/ecommerce_cg_test?serverVersion=8.0" >> .env.test.local
           echo "MAILER_DSN=null://null" >> .env.test.local
           echo "STRIPE_SECRET_KEY=sk_test_fake_key" >> .env.test.local
           echo "APP_SECRET=test_secret_key_for_github_actions_ci" >> .env.test.local
+      
+      # ✅ Étape 7 — Donne les droits MySQL à test_user
+      - name: Grant MySQL privileges
+        run: mysql -h 127.0.0.1 -u root -proot -e "GRANT ALL PRIVILEGES ON *.* TO 'test_user'@'%'; FLUSH PRIVILEGES;"
 
-      # Étape 6 — Crée la base de données de test et lance les migrations
+
+      # Étape 8 — Crée la base de données de test et lance les migrations
       - name: Setup test database
         run: |
           php bin/console doctrine:database:create --env=test --if-not-exists
           php bin/console doctrine:migrations:migrate --env=test --no-interaction
 
-      # Étape 7 — Charge les fixtures de test
+      # Étape 9 — Charge les fixtures de test
       - name: Load test fixtures
         run: php bin/console doctrine:fixtures:load --env=test --no-interaction
 
-      # Étape 8 — Lance les tests unitaires
+      # Étape 10 — Lance les tests unitaires
       - name: Run Unit Tests
         run: php bin/phpunit tests/Unit/ --testdox
 
-      # Étape 9 — Lance les tests fonctionnels
+      # Étape 11 — Lance les tests fonctionnels
       - name: Run Functional Tests
         run: php bin/phpunit tests/Functional/ --testdox
