@@ -15,7 +15,8 @@ final class Version20260412173318 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return 'Ajout des champs response et responded_at à la table contact';
+        // return 'Ajout des champs response et responded_at à la table contact';
+        return 'Migration vide - doublon de Version20260412173247';
     }
 
     public function up(Schema $schema): void
@@ -29,11 +30,11 @@ final class Version20260412173318 extends AbstractMigration
         // ');
 
         // ✅ Syntaxe compatible MySQL 8.0 et MariaDB
-    $this->addSql('ALTER TABLE contact ADD response LONGTEXT DEFAULT NULL, ADD responded_at DATETIME DEFAULT NULL');
+    // $this->addSql('ALTER TABLE contact ADD response LONGTEXT DEFAULT NULL, ADD responded_at DATETIME DEFAULT NULL');
     }
 
     public function down(Schema $schema): void
     {
-        $this->addSql('ALTER TABLE contact DROP response, DROP responded_at');
+        // $this->addSql('ALTER TABLE contact DROP response, DROP responded_at');
     }
 }
