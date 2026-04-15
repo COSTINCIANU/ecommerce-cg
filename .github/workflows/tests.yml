@@ -67,7 +67,7 @@ jobs:
           echo "MAILER_DSN=null://null" >> .env
           echo "STRIPE_SECRET_KEY=sk_test_fake_key" >> .env
           echo "MESSENGER_TRANSPORT_DSN=doctrine://default?auto_setup=0" >> .env
-
+          echo "DEFAULT_URI=http://localhost" >> .env
 
       # Étape 4 — Installe les dépendances PHP
       - name: Install Composer dependencies
