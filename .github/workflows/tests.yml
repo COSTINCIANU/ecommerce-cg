@@ -1,0 +1,89 @@
+# ═══════════════════════════════════════════════════════════════
+# GitHub Actions — CI/CD Pipeline C.G E-commerce
+# Se déclenche à chaque push et pull request sur master
+# Exécute les tests PHPUnit unitaires et fonctionnels
+# Auteur : Gheorghina Costincianu
+# ═══════════════════════════════════════════════════════════════
+
+name: Tests PHPUnit
+
+on:
+  # Déclenché à chaque push sur la branche master
+  push:
+    branches: [ master ]
+  # Déclenché à chaque pull request vers master
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  tests:
+    # Utilise Ubuntu Linux comme environnement d'exécution
+    runs-on: ubuntu-latest
+
+    services:
+      # Service MySQL pour les tests fonctionnels
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: ecommerce_cg_test
+          MYSQL_USER: test_user
+          MYSQL_PASSWORD: test_password
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
+    steps:
+      # Étape 1 — Récupère le code depuis GitHub
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Étape 2 — Configure PHP 8.2 avec les extensions nécessaires
+      - name: Setup PHP 8.2
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, xml, ctype, iconv, intl, pdo_mysql, gd, zip
+          coverage: none
+
+      # Étape 3 — Cache les dépendances Composer pour accélérer les builds
+      - name: Cache Composer dependencies
+        uses: actions/cache@v3
+        with:
+          path: vendor/
+          key: ${{ runner.os }}-composer-${{ hashFiles('composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      # Étape 4 — Installe les dépendances PHP
+      - name: Install Composer dependencies
+        run: composer install --no-progress --prefer-dist --optimize-autoloader
+
+      # Étape 5 — Crée le fichier .env.test.local pour les tests
+      - name: Create .env.test.local
+        run: |
+          echo "DATABASE_URL=mysql://test_user:test_password@127.0.0.1:3306/ecommerce_cg_test?serverVersion=8.0" >> .env.test.local
+          echo "MAILER_DSN=null://null" >> .env.test.local
+          echo "STRIPE_SECRET_KEY=sk_test_fake_key" >> .env.test.local
+          echo "APP_SECRET=test_secret_key_for_github_actions_ci" >> .env.test.local
+
+      # Étape 6 — Crée la base de données de test et lance les migrations
+      - name: Setup test database
+        run: |
+          php bin/console doctrine:database:create --env=test --if-not-exists
+          php bin/console doctrine:migrations:migrate --env=test --no-interaction
+
+      # Étape 7 — Charge les fixtures de test
+      - name: Load test fixtures
+        run: php bin/console doctrine:fixtures:load --env=test --no-interaction
+
+      # Étape 8 — Lance les tests unitaires
+      - name: Run Unit Tests
+        run: php bin/phpunit tests/Unit/ --testdox
+
+      # Étape 9 — Lance les tests fonctionnels
+      - name: Run Functional Tests
+        run: php bin/phpunit tests/Functional/ --testdox
