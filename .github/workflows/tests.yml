@@ -23,7 +23,9 @@ jobs:
     services:
       # Service MySQL pour les tests fonctionnels
       mysql:
-        image: mysql:8.0
+        # image: mysql:8.0
+         # ✅ Utilise MariaDB comme en local
+        image: mariadb:10.4
         env:
           MYSQL_ROOT_PASSWORD: root
           MYSQL_DATABASE: ecommerce_cg_test
@@ -63,7 +65,7 @@ jobs:
         run: |
           echo "APP_ENV=test" > .env
           echo "APP_SECRET=test_secret_key_for_github_actions" >> .env
-          echo "DATABASE_URL=mysql://test_user:test_password@127.0.0.1:3306/ecommerce_cg_test?serverVersion=8.0" >> .env
+          echo "DATABASE_URL=mysql://test_user:test_password@127.0.0.1:3306/ecommerce_cg_test?serverVersion=10.4.32-MariaDB" >> .env
           echo "MAILER_DSN=null://null" >> .env
           echo "STRIPE_SECRET_KEY=sk_test_fake_key" >> .env
           echo "MESSENGER_TRANSPORT_DSN=doctrine://default?auto_setup=0" >> .env
@@ -76,7 +78,7 @@ jobs:
       # Étape 6 — Crée le fichier .env.test.local pour les tests
       - name: Create .env.test.local
         run: |
-          echo "DATABASE_URL=mysql://test_user:test_password@127.0.0.1:3306/ecommerce_cg_test?serverVersion=8.0" >> .env.test.local
+          echo "DATABASE_URL=mysql://test_user:test_password@127.0.0.1:3306/ecommerce_cg_test?serverVersion=10.4.32-MariaDB" >> .env.test.local
           echo "MAILER_DSN=null://null" >> .env.test.local
           echo "STRIPE_SECRET_KEY=sk_test_fake_key" >> .env.test.local
           echo "APP_SECRET=test_secret_key_for_github_actions_ci" >> .env.test.local

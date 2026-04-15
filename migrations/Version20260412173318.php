@@ -22,11 +22,14 @@ final class Version20260412173318 extends AbstractMigration
     {
         // Vérification que les colonnes n'existent pas déjà
         // avant de les ajouter (évite les erreurs sur BDD existante)
-        $this->addSql('
-            ALTER TABLE contact 
-            ADD COLUMN IF NOT EXISTS response LONGTEXT DEFAULT NULL,
-            ADD COLUMN IF NOT EXISTS responded_at DATETIME DEFAULT NULL
-        ');
+        // $this->addSql('
+        //     ALTER TABLE contact 
+        //     ADD COLUMN IF NOT EXISTS response LONGTEXT DEFAULT NULL,
+        //     ADD COLUMN IF NOT EXISTS responded_at DATETIME DEFAULT NULL
+        // ');
+
+        // ✅ Syntaxe compatible MySQL 8.0 et MariaDB
+    $this->addSql('ALTER TABLE contact ADD response LONGTEXT DEFAULT NULL, ADD responded_at DATETIME DEFAULT NULL');
     }
 
     public function down(Schema $schema): void
