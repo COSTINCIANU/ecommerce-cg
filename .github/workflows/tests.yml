@@ -58,6 +58,17 @@ jobs:
           key: ${{ runner.os }}-composer-${{ hashFiles('composer.lock') }}
           restore-keys: ${{ runner.os }}-composer-
 
+      # ✅ Étape 3.5 — Crée le fichier .env AVANT composer install
+      - name: Create .env
+        run: |
+          echo "APP_ENV=test" > .env
+          echo "APP_SECRET=test_secret_key_for_github_actions" >> .env
+          echo "DATABASE_URL=mysql://test_user:test_password@127.0.0.1:3306/ecommerce_cg_test?serverVersion=8.0" >> .env
+          echo "MAILER_DSN=null://null" >> .env
+          echo "STRIPE_SECRET_KEY=sk_test_fake_key" >> .env
+          echo "MESSENGER_TRANSPORT_DSN=doctrine://default?auto_setup=0" >> .env
+
+
       # Étape 4 — Installe les dépendances PHP
       - name: Install Composer dependencies
         run: composer install --no-progress --prefer-dist --optimize-autoloader
