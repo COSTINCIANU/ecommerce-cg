@@ -139,6 +139,9 @@ final class CheckoutController extends AbstractController
     #[Route('/paypal/payment/success', name: 'app_paypal_payment_success')]
     public function paypalPaymentSuccess(Request $req, OrderRepository $orderRepo, EntityManagerInterface $em): Response 
     { 
+        // Vider le panier après paiement PayPal ✅
+        $this->cartService->clearCart();
+
         return $this->render('payment/index.html.twig', [
             'controller_name' => 'PaymentController',
             
