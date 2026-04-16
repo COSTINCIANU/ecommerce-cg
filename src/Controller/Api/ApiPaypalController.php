@@ -62,7 +62,11 @@ final class ApiPaypalController extends AbstractController
         ): Response
     {
         $accessToken = $this->generateAccessToken();
-        $orderId = $req->getPayload()->get('orderId');
+        // $orderId = $req->getPayload()->get('orderId');
+        
+        // APRÈS - pour lire du JSON il faut getContent()
+        $data = json_decode($req->getContent(), true);
+        $orderId = $data['orderId'] ?? null;
         
         // On recupere de la bdd la commande si existe
         $order = $orderRepo->findOneById($orderId);

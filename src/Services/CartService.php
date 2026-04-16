@@ -241,8 +241,20 @@ class CartService {
             $taxe_rate = $setting->getTaxeRate()/100;
         }
 
+        // 1 seule requête pour tous les produits
+        $productIds = array_keys($cart);
+        $products = $this->productRepo->findByIds($productIds);
+
+        // Indexer par id pour accès rapide
+        $productsById = [];
+        foreach ($products as $p) {
+            $productsById[$p->getId()] = $p;
+        }
+
+        // Ton foreach original — rien ne change sauf la 1ère ligne
         foreach ($cart as $productId => $quantity) {
-            $product = $this->productRepo->find($productId);
+            $product = $productsById[$productId] ?? null; // ← seul changement
+            
             if($product) {
                 $current_sub_total = $product->getSoldePrice()*$quantity;
                 $sub_total += $current_sub_total;

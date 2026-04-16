@@ -78,8 +78,10 @@ class Product
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updated_at = null;
 
-    #[ORM\ManyToOne(targetEntity: self::class)]
-    private ?self $relatedProducts = null;
+    // APRÈS
+    #[ORM\ManyToMany(targetEntity: self::class)]
+    #[ORM\JoinTable(name: 'product_related_products')]
+    private Collection|null $relatedProducts = null;
 
     /**
      * @var Collection<int, Comment>
@@ -92,6 +94,7 @@ class Product
         $this->setCreatedAt(new \DateTimeImmutable());
         $this->categories = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->relatedProducts = new ArrayCollection(); // ← ajouter
     }
 
     public function getId(): ?int
@@ -330,15 +333,26 @@ class Product
         return $this;
     }
 
-    public function getRelatedProducts(): ?self
+    public function getRelatedProducts(): Collection
     {
+        // Si null (vieux objet en session), retourner une collection vide
+        if ($this->relatedProducts === null) {
+            $this->relatedProducts = new ArrayCollection();
+        }
         return $this->relatedProducts;
     }
 
-    public function setRelatedProducts(?self $relatedProducts): static
+    public function addRelatedProduct(self $product): static
     {
-        $this->relatedProducts = $relatedProducts;
+        if (!$this->relatedProducts->contains($product)) {
+            $this->relatedProducts->add($product);
+        }
+        return $this;
+    }
 
+    public function removeRelatedProduct(self $product): static
+    {
+        $this->relatedProducts->removeElement($product);
         return $this;
     }
 
