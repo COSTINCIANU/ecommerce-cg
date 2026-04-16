@@ -42,7 +42,9 @@ class ProductCrudController extends AbstractCrudController
             TextField::new('description')->hideOnIndex(),
             TextField::new('more_description')->hideOnIndex(),
             TextField::new('additional_infos')->hideOnIndex(),
-            AssociationField::new('relatedProducts')->hideOnIndex(), // Produits lie via la relation
+            AssociationField::new('relatedProducts')
+                    ->hideOnIndex() // Produits lie via la relation
+                    ->setFormTypeOption('by_reference', false),
             ImageField::new('imageUrls')
                 ->setFormTypeOptions([
                     "multiple" => true,

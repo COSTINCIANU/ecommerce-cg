@@ -365,10 +365,15 @@ class CartServiceTest extends TestCase
         $mockProduct->method('getRegularPrice')->willReturn(1500);
         $mockProduct->method('getImageUrls')->willReturn([]);
 
+        // $this->productRepo
+        //     ->method('find')
+        //     ->with(1)
+        //     ->willReturn($mockProduct);
+
         $this->productRepo
-            ->method('find')
-            ->with(1)
-            ->willReturn($mockProduct);
+            ->method('findByIds')
+            ->with([1])
+            ->willReturn([$mockProduct]);
 
         // Mock transporteur
         $mockCarrier = $this->createMock(\App\Entity\Carrier::class);

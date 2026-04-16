@@ -40,4 +40,31 @@ class ProductRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+    public function findByIds(array $ids): array
+    {
+        // charger tous les produits en 1 seule requête
+        return $this->createQueryBuilder('p')
+            ->where('p.id IN (:ids)')
+            ->setParameter('ids', $ids)
+            ->getQuery()
+            ->getResult();
+    }
+    
+    public function findBySlugWithRelated(string $slug): ?Product
+    {
+        return $this->createQueryBuilder('p')
+            ->leftJoin('p.relatedProducts', 'r')
+            ->addSelect('r')                    // charge tout en 1 seule requête
+            ->leftJoin('p.categories', 'c')
+            ->addSelect('c')
+            ->leftJoin('p.comments', 'co')
+            ->addSelect('co')
+            ->where('p.slug = :slug')
+            ->setParameter('slug', $slug)
+            ->distinct()  // ← ajouter cette ligne
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

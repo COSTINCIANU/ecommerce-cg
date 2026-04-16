@@ -22,7 +22,8 @@ final class ApiOrderController extends AbstractController
         $order = $ordersRepo->findOneById($id);
 
         if (!$order) {
-            return $this->redirectToRoute("/checkout");
+            // return $this->redirectToRoute("/checkout");
+            return $this->json(['error' => 'Commande introuvable'], 404); // ← JSON pas redirect
         }
         
         $order->setBillingAddress($data->get("billing_address"))
@@ -33,8 +34,9 @@ final class ApiOrderController extends AbstractController
         $em->flush();
 
 
-        return $this->render('api/api_order/index.html.twig', [
-            'controller_name' => 'ApiOrderController',
-        ]);
+        // return $this->render('api/api_order/index.html.twig', [
+        //     'controller_name' => 'ApiOrderController',
+        // ]);
+         return $this->json(['success' => true, 'orderId' => $order->getId()]); // ← JSON ✅
     }
 }

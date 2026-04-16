@@ -113,7 +113,8 @@ final class HomeController extends AbstractController
         OrderRepository $orderRepository,
         EntityManagerInterface $em
     ): Response {
-        $product = $this->productRepo->findOneBy(['slug' => $slug]);
+        // $product = $this->productRepo->findOneBy(['slug' => $slug]);
+        $product = $this->productRepo->findBySlugWithRelated($slug);
 
         if (!$product) {
             return $this->redirectToRoute('app_error');
