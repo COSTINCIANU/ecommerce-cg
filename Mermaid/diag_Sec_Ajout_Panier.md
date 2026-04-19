@@ -1,5 +1,6 @@
 
 <!-- Diagramme d’activité -->
+``` mermaid
 flowchart TD
     A[Début] --> B[Remplir formulaire]
     B --> C{Formulaire valide ?}
@@ -28,9 +29,11 @@ flowchart TD
     E --> P
     H --> P
     O --> P
+```
 <!-- Fin Diagramme d’activité -->
 
 <!-- Ajout au panier -->
+``` mermaid
 sequenceDiagram
     actor Client
     participant Browser
@@ -55,10 +58,13 @@ sequenceDiagram
         CartController -->> Browser : JSON error
         Browser -->> Client : afficher erreur
     end
+```
+
 <!-- fin Ajout au panier -->
 
 <!-- Paiment Stripe  -->
 
+``` mermaid
 sequenceDiagram
     actor Client
     participant Browser
@@ -91,9 +97,11 @@ sequenceDiagram
         StripeController -->> Browser : error
         Browser -->> Client : erreur technique
     end
+```
 <!-- Fin Paiment Stripe  -->
 
 <!-- Validation commande -->
+``` mermaid
 sequenceDiagram
     actor Client
     participant Browser
@@ -137,10 +145,12 @@ sequenceDiagram
         OrderController -->> Browser : error
         Browser -->> Client : afficher erreur
     end
+```
 <!-- Fin Validation commande -->
 
 
 <!-- Parcours client global -->
+``` mermaid
 sequenceDiagram
     actor Client
     participant Site
@@ -173,9 +183,11 @@ sequenceDiagram
     else Panier invalide
         Panier -->> Client : erreur panier
     end
+```
 <!-- Fin Parcours client global -->
 
 <!-- Contact / réponse admin -->
+``` mermaid
 sequenceDiagram
     actor Client
     actor Admin
@@ -204,12 +216,15 @@ sequenceDiagram
     else Message invalide
         Contact -->> Client : erreur formulaire
     end
+```
+
 <!-- Contact / réponse admin -->
 
 
 
 
 <!-- Diagramme d’activité — Contact / réponse admin avec couleurs -->
+``` mermaid
 flowchart TD
 
     A[Début] --> B[Client remplit le formulaire]
@@ -257,9 +272,11 @@ flowchart TD
     style O fill:#f87171,stroke:#333,color:#fff,stroke-width:1px
     style P fill:#4ade80,stroke:#333,stroke-width:2px
 
+```
 <!-- Fin Diagramme d’activité — Contact / réponse admin avec couleurs -->
 
 <!-- Séquence — Ajouter au panier -->
+``` mermaid
 sequenceDiagram
     autonumber
     actor Client
@@ -297,10 +314,13 @@ sequenceDiagram
         Browser-->>Client: afficher stock insuffisant
         end
     end
+```
+
 <!-- fin Séquence — Ajouter au panier -->
 
 
 <!-- Séquence — Paiement Stripe -->
+``` mermaid
 sequenceDiagram
     autonumber
     actor Client
@@ -343,9 +363,12 @@ sequenceDiagram
         Browser-->>Client: afficher erreur technique
         end
     end
+```
+
 <!-- Fin Séquence — Paiement Stripe -->
 
 <!-- Séquence — Validation commande -->
+``` mermaid
 sequenceDiagram
     autonumber
     actor Client
@@ -401,9 +424,12 @@ sequenceDiagram
         Browser-->>Client: afficher erreur panier
         end
     end
+```
+
 <!-- Séquence — Validation commande -->
 
 <!-- Séquence — Parcours client global -->
+``` mermaid
 sequenceDiagram
     autonumber
     actor Client
@@ -449,9 +475,12 @@ sequenceDiagram
         Panier-->>Client: afficher erreur panier
         end
     end
+```
+
 <!-- Fin Séquence — Parcours client global -->
 
 <!-- Séquence — Contact / réponse admin -->
+``` mermaid
 sequenceDiagram
     autonumber
     actor Client
@@ -493,6 +522,8 @@ sequenceDiagram
         Contact-->>Client: afficher erreur formulaire
         end
     end
+```
+
 <!-- Fin Séquence — Contact / réponse admin -->
 
 
@@ -508,6 +539,7 @@ Jaune clair : attente / cas intermédiaire non bloquant
 
 
 <!-- Diagramme de Class sans couleurs  -->
+``` mermaid
 classDiagram
 
 class user {
@@ -668,9 +700,11 @@ product "0..*" --> "0..*" product : etre_lie_a
 order ..> carrier : utiliser
 order ..> payment_method : utiliser
 
+```
 <!-- Fin Diagramme de Class sans couleurs  -->
 
 <!-- Diagramme Class Use as Address -->
+``` mermaid
 classDiagram
 
 class user {
@@ -687,12 +721,16 @@ class address {
 }
 
 user "1" --> "0..*" address : posseder
+```
 
 <!-- Fin Diagramme Class Use as Address -->
 
 <!-- Diagramme Class Use as Order -->
+``` mermaid
 classDiagram
 class user
 class order
 user "1" --> "0..*" order : passer
+```
+
 <!-- Fin  Diagramme Class Use as Order -->
