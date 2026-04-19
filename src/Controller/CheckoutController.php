@@ -139,6 +139,9 @@ final class CheckoutController extends AbstractController
     #[Route('/paypal/payment/success', name: 'app_paypal_payment_success')]
     public function paypalPaymentSuccess(Request $req, OrderRepository $orderRepo, EntityManagerInterface $em): Response 
     { 
+        // Vider le panier après paiement PayPal ✅
+        $this->cartService->clearCart();
+
         return $this->render('payment/index.html.twig', [
             'controller_name' => 'PaymentController',
             
@@ -202,24 +205,25 @@ final class CheckoutController extends AbstractController
         // ... (autres propriétés de la commande)
 
         $this->em->persist($order);
-      
 
-        foreach ($cart['items'] as $key => $item ) {
-            $product = $item['product'];
+        // ← AJOUT de condition ici 
+        if($order->getOrderDetails()->isEmpty()) {
+            foreach ($cart['items'] as $key => $item) {
+                $product = $item['product'];
 
-            $orderDetails = new OrderDetails();
+                $orderDetails = new OrderDetails();
 
-            $orderDetails->setProductName($product['name'])
-                ->setProductDescription($product['description'])
-                ->setProductSoldePrice($product['soldePrice'])
-                ->setProductRegularPrice($product['regularPrice'])
-                ->setQuantity($item['quantity'])
-                ->setSubTotal($item['sub_total'])
-                ->setTaxe($item['taxe'])
-                ->setMyOrder($order)
-            ;
+                $orderDetails->setProductName($product['name'])
+                    ->setProductDescription($product['description'])
+                    ->setProductSoldePrice($product['soldePrice'])
+                    ->setProductRegularPrice($product['regularPrice'])
+                    ->setQuantity($item['quantity'])
+                    ->setSubTotal($item['sub_total'])
+                    ->setTaxe($item['taxe'])
+                    ->setMyOrder($order);
 
-            $this->em->persist($orderDetails);
+                $this->em->persist($orderDetails);
+            }
         }
 
         $this->em->flush();

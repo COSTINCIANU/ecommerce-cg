@@ -47,22 +47,35 @@ services:
       dockerfile: docker/php/Dockerfile
     # Nom du conteneur dans Docker
     container_name: cg_php
+    entrypoint: >
+      sh -c "mkdir -p /var/www/html/var/cache/prod/asset_mapper &&
+            chown -R www-data:www-data /var/www/html/var &&
+            chmod -R 777 /var/www/html/var &&
+            php-fpm"
     volumes:
       # Monte mon projet dans le conteneur (synchronisation temps réel)
       - .:/var/www/html
-      # - ./public/assets:/var/www/html/public/assets 
+      # - ./public/assets:/var/www/html/public/assets
+      - /dev/null:/var/www/html/.env.local  # ← ajoute cette ligne 
+    
     environment:
-      # Mode production pour Symfony
       - APP_ENV=prod
-      # Clé secrète Symfony (récupérée depuis .env.docker)
-      - APP_SECRET=${APP_SECRET}
-      # URL de connexion à la BDD MySQL dans Docker
-      # Format : mysql://user:password@host:port/database
+      - APP_SECRET=87a0fdd7d3c25f1639f96c7fe4b2ed6d
       - DATABASE_URL=mysql://cg_user:cg_password@mysql:3306/ecommerce_cg?serverVersion=8.0
-      # Configuration email Mailjet pour la production
-      - MAILER_DSN=${MAILER_DSN}
-      # Clé secrète Stripe pour les paiements
-      - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
+      - MAILER_DSN=mailjet+smtp://7d305fa8525ab4fb4d06d3ba5f874a2c:1c4be730a55e6e6f95b43f1a434860b8@in-v3.mailjet.com:587
+      - MESSENGER_TRANSPORT_DSN=doctrine://default?auto_setup=0
+    # environment:
+    #   # Mode production pour Symfony
+    #   - APP_ENV=prod
+    #   # Clé secrète Symfony (récupérée depuis .env.docker)
+    #   - APP_SECRET=${APP_SECRET}
+    #   # URL de connexion à la BDD MySQL dans Docker
+    #   # Format : mysql://user:password@host:port/database
+    #   - DATABASE_URL=mysql://cg_user:cg_password@mysql:3306/ecommerce_cg?serverVersion=8.0
+    #   # Configuration email Mailjet pour la production
+    #   - MAILER_DSN=${MAILER_DSN}
+    #   # Clé secrète Stripe pour les paiements
+    #   - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
     depends_on:
       # PHP démarre seulement après MySQL
       - mysql

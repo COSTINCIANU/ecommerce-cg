@@ -47,7 +47,9 @@ class InvoiceController extends AbstractController
         $user = $this->getUser();
 
         // 1. Récupération de la commande
-        $order = $orderRepository->find($id);
+        // $order = $orderRepository->find($id);
+
+        $order = $orderRepository->findOneByIdWithDetails($id);
 
         if (!$order) {
             throw $this->createNotFoundException('Commande introuvable.');

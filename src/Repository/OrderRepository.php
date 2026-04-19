@@ -17,32 +17,6 @@ class OrderRepository extends ServiceEntityRepository
         parent::__construct($registry, Order::class);
     }
 
-    //    /**
-    //     * @return Order[] Returns an array of Order objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('o')
-    //            ->andWhere('o.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('o.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?Order
-    //    {
-    //        return $this->createQueryBuilder('o')
-    //            ->andWhere('o.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
-
-
 
     /**
      * Vérifie si un utilisateur possède au moins une commande payée.
@@ -85,5 +59,16 @@ class OrderRepository extends ServiceEntityRepository
             ->orderBy('o.created_at', 'DESC')
             ->getQuery()
             ->getResult();
+    }
+
+    public function findOneByIdWithDetails(int $id): ?Order
+    {
+        return $this->createQueryBuilder('o')
+            ->leftJoin('o.orderDetails', 'od')
+            ->addSelect('od')
+            ->where('o.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 }

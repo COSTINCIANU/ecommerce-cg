@@ -38,6 +38,11 @@
                                     <input required="" type="password"
                                         formcontrolname="password" name="password" placeholder="Password"
                                         class="form-control ng-untouched ng-pristine ng-invalid" autocomplete="email" required autofocus>
+                                    
+                                    <div class="text-end mt-2">
+                                        <a href="{{ path('app_forgot_password_request') }}">Mot de passe oublié ?</a>
+                                    </div>
+
                                 </div>
 
                                 {# <div class="login_footer form-group mb-3">
@@ -76,7 +81,8 @@
                             </ul> #}
 
                             <div class="form-note text-center">Vous n'avez pas de compte ? 
-                                <a href="/register">Inscrivez-vous maintenant</a>
+                                {# <a href="/register">Inscrivez-vous maintenant</a> #}
+                                <a href="{{ path('app_register') }}">Inscrivez-vous maintenant</a>
                             </div>
                         </div>
                     </div>

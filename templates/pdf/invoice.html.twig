@@ -17,10 +17,16 @@
             padding-bottom: 20px;
             border-bottom: 3px solid #FF324D;
         }
-        .company-name {
+        {# .company-name {
             font-size: 32px;
             font-weight: bold;
             color: #FF324D;
+            letter-spacing: 2px;
+        } #}
+        /* APRÈS */
+        .company-name {
+            font-size: 32px;
+            font-weight: bold;
             letter-spacing: 2px;
         }
         .company-info {
@@ -170,7 +176,10 @@
     <!-- EN-TÊTE -->
     <div class="header">
         <div style="float: left;">
-            <div class="company-name">C.G</div>
+            {# APRÈS #}
+            <div class="company-name">
+                <span style="color: #292b2c;">C</span><span style="color: #FF324D;">.</span><span style="color: #292b2c;">G</span>
+            </div>
             <div class="company-info">
                 Impasse du Couchant<br>
                 34140 Mèze, France<br>

@@ -51,7 +51,13 @@ RUN APP_ENV=prod php bin/console cache:clear --no-warmup
 
 
 
-RUN chown -R www-data:www-data /var/www/html/var \
+# AVANT cette ligne :
+# RUN chown -R www-data:www-data /var/www/html/var \
+#     && chmod -R 777 /var/www/html/var
+
+# REMPLACE par :
+RUN mkdir -p /var/www/html/var/cache/prod/asset_mapper \
+    && chown -R www-data:www-data /var/www/html/var \
     && chmod -R 777 /var/www/html/var
 
 EXPOSE 9000
