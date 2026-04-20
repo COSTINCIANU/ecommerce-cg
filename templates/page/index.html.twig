@@ -2,12 +2,46 @@
 
 {% block title %}C.G | {{ page.title }}{% endblock %}
 
+{% block stylesheets %}
+{{ parent() }}
+<style>
+.page-content h2 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-top: 2rem;
+    margin-bottom: 0.8rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 2px solid #000;
+}
+.page-content p {
+    margin-bottom: 1rem;
+    line-height: 1.7;
+}
+.page-content ul {
+    margin-bottom: 1rem;
+    padding-left: 1.5rem;
+}
+.page-content ul li {
+    margin-bottom: 0.4rem;
+    line-height: 1.6;
+}
+.page-content a {
+    color: #000;
+    text-decoration: underline;
+}
+</style>
+{% endblock %}
+
+
 {% block body %}
 {# Inclusion de la template qui se affiche sur la page #}
 {% include "page_head/page_head.html.twig" with {'page_name': page.title } %}
 <div  class="main_content">
     <div  class="section">
-        <div  class="container">
+        {# <div  class="container">
+            {{ page.content | raw }}
+        </div> #}
+        <div class="container page-content">
             {{ page.content | raw }}
         </div>
     </div>
