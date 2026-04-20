@@ -48,14 +48,9 @@ services:
       STRIPE_PUBLIC_KEY: pk_test_REMPLACER_PAR_VOTRE_CLE
       STRIPE_WEBHOOK_SECRET: whsec_REMPLACER_PAR_VOTRE_CLE
       # PayPal en mode sandbox
-      PAYPAL_CLIENT_ID: REMPLACER_PAR_VOTRE_CLIENT_ID
-      PAYPAL_CLIENT_SECRET: REMPLACER_PAR_VOTRE_SECRET
-      # Emails désactivés
-      MAILER_DSN: "null://null"
-
+      # PAYPAL_CLIENT_SECRET: REMPLACER_PAR_VOTRE_SECRET
       # PayPal en mode sandbox
-      PAYPAL_CLIENT_ID: your_sandbox_client_id
-      PAYPAL_CLIENT_SECRET: your_sandbox_secret
+      # PAYPAL_CLIENT_SECRET: your_sandbox_secret
 
       # Emails désactivés (aucun mail envoyé pendant les tests ZAP)
       MAILER_DSN: "null://null"
