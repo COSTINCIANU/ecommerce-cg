@@ -41,16 +41,17 @@ services:
       APP_ENV: prod
       APP_DEBUG: "0"
       APP_SECRET: staging_secret_key_32chars_min_xx
-
       # Base de données SÉPARÉE de la prod
       DATABASE_URL: "mysql://cg_user:cg_password@mysql_staging:3306/ecommerce_cg_staging"
-
       # Clés TEST Stripe (pas de vrai argent !)
       STRIPE_SECRET_KEY: sk_test_REMPLACER_PAR_VOTRE_CLE
       STRIPE_PUBLIC_KEY: pk_test_REMPLACER_PAR_VOTRE_CLE
       STRIPE_WEBHOOK_SECRET: whsec_REMPLACER_PAR_VOTRE_CLE
+      # PayPal en mode sandbox
       PAYPAL_CLIENT_ID: REMPLACER_PAR_VOTRE_CLIENT_ID
       PAYPAL_CLIENT_SECRET: REMPLACER_PAR_VOTRE_SECRET
+      # Emails désactivés
+      MAILER_DSN: "null://null"
 
       # PayPal en mode sandbox
       PAYPAL_CLIENT_ID: your_sandbox_client_id
