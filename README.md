@@ -73,8 +73,8 @@ C.G Boutique est une application e-commerce complète permettant la vente en lig
 ## 📊 Documentation UML
 | Diagramme | Lien |
 |---|---|
-| Diagrammes d'Activité (Mermaid) | [Voir →](docs/cg-diagrammes-activite-mermaid.md) |
-| Diagrammes de Séquences | [Voir →](docs/) |
+| Diagrammes d'Activité (Mermaid) | [Voir →](mermaid/cg-diagrammes-activite-mermaid.md) |
+<!-- | Diagrammes de Séquences | [Voir →](mermaid/) | -->
 
 
 ## Installation locale
