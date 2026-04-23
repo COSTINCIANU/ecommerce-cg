@@ -70,6 +70,12 @@ C.G Boutique est une application e-commerce complète permettant la vente en lig
 | GitHub Actions | — | CI/CD Pipeline |
 
 ---
+## 📊 Documentation UML
+| Diagramme | Lien |
+|---|---|
+| Diagrammes d'Activité (Mermaid) | [Voir →](docs/cg-diagrammes-activite-mermaid.md) |
+| Diagrammes de Séquences | [Voir →](docs/) |
+
 
 ## Installation locale
 

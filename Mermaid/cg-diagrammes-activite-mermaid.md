@@ -2,7 +2,6 @@
 
 **Projet :** C.G Boutique — E-commerce mode (solo)  
 **Stack :** Symfony 7.4 · PHP 8.2 · MySQL/MariaDB · EasyAdmin 5 · Stripe · PayPal · Mailjet · DomPDF · Docker  
-**Certification :** CDA — RNCP37873 Niveau 6  
 **Auteure :** Gheorghina COSTINCIANU — ADRAR Formation
 
 ---
