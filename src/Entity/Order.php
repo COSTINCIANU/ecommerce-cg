@@ -43,6 +43,8 @@ class Order
 
     #[ORM\Column(length: 255)]
     private ?string $status = null;
+    // private string $status = 'pending'; 
+    // valeurs : pending / paid / cancelled
 
     #[ORM\Column]
     private ?int $carrier_price = null;
