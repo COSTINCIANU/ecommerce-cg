@@ -8,8 +8,6 @@
 
 <!-- START MAIN CONTENT -->
 <div class="main_content">
-
-<!-- START SECTION SHOP -->
 <div class="section">
 	<div class="container">
         <div class="row">
@@ -29,78 +27,33 @@
                         <a class="nav-link" id="account-detail-tab" data-bs-toggle="tab" href="#account-detail" role="tab" aria-controls="account-detail" aria-selected="true"><i class="ti-id-badge"></i>Account details</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" id="logout-tab"  href="#logout" data-bs-toggle="tab" role="tab" aria-controls="logout" aria-selected="true" ><i class="ti-lock"></i>Logout</a>
+                        <a class="nav-link" id="logout-tab" href="#logout" data-bs-toggle="tab" role="tab" aria-controls="logout" aria-selected="true"><i class="ti-lock"></i>Logout</a>
                       </li>
                     </ul>
                 </div>
             </div>
+
             <div class="col-lg-9 col-md-8">
                 <div class="tab-content dashboard_content">
-                  	<div class="tab-pane fade" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
-                    	<div class="card">
-                        	<div class="card-header">
-                                <h3>Dashboard</h3>
-                            </div>
-                            <div class="card-body">
-                    			<p>From your account dashboard. you can easily check &amp; view your <a href="javascript:void(0);" onclick="$('#orders-tab').trigger('click')">recent orders</a>, manage your <a href="javascript:void(0);" onclick="$('#address-tab').trigger('click')">shipping and billing addresses</a> and <a href="javascript:void(0);" onclick="$('#account-detail-tab').trigger('click')">edit your password and account details.</a></p>
-                            </div>
-                        </div>
-                  	</div>
-                  	<div class="tab-pane fade" id="logout" role="tabpanel" aria-labelledby="logout-tab">
-                    	<div class="card">
-                        	<div class="card-header">
-                                <h3>Logout</h3>
-                            </div>
-                            <div class="card-body">
-                    			<p>From your account dashboard. you can easily check &amp; view your <a href="javascript:void(0);" onclick="$('#orders-tab').trigger('click')">recent orders</a>, manage your <a href="javascript:void(0);" onclick="$('#address-tab').trigger('click')">shipping and billing addresses</a> and <a href="javascript:void(0);" onclick="$('#account-detail-tab').trigger('click')">edit your password and account details.</a></p>
-                                <button type="submit" class="btn btn-fill-out py-2" name="submit" value="Submit">Logout</button>
-                            </div>
-                        </div>
-                  	</div>
-                  	{# <div class="tab-pane fade" id="orders" role="tabpanel" aria-labelledby="orders-tab">
-                    	<div class="card">
-                        	<div class="card-header">
-                                <h3>Orders</h3>
-                            </div>
-                            <div class="card-body">
-                    			<div class="table-responsive">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>Order</th>
-                                                <th>Date</th>
-                                                <th>Status</th>
-                                                <th>Total</th>
-                                                <th>Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>#1234</td>
-                                                <td>March 15, 2020</td>
-                                                <td>Processing</td>
-                                                <td>$78.00 for 1 item</td>
-                                                <td><a href="#" class="btn btn-fill-out btn-sm">View</a></td>
-                                            </tr>
-                                            <tr>
-                                                <td>#2366</td>
-                                                <td>June 20, 2020</td>
-                                                <td>Completed</td>
-                                                <td>$81.00 for 1 item</td>
-                                                <td><a href="#" class="btn btn-fill-out btn-sm">View</a></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                  	</div> #}
 
+                    {# ── DASHBOARD ── #}
+                    <div class="tab-pane fade active show" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
+                        <div class="card">
+                            <div class="card-header"><h3>Dashboard</h3></div>
+                            <div class="card-body">
+                                <p>From your account dashboard. you can easily check &amp; view your 
+                                    <a href="javascript:void(0);" onclick="$('#orders-tab').trigger('click')">recent orders</a>, 
+                                    manage your <a href="javascript:void(0);" onclick="$('#address-tab').trigger('click')">shipping and billing addresses</a> 
+                                    and <a href="javascript:void(0);" onclick="$('#account-detail-tab').trigger('click')">edit your password and account details.</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {# ── ORDERS ── #}
                     <div class="tab-pane fade" id="orders" role="tabpanel" aria-labelledby="orders-tab">
                         <div class="card">
-                            <div class="card-header">
-                                <h3>Mes commandes</h3>
-                            </div>
+                            <div class="card-header"><h3>Mes commandes</h3></div>
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table">
@@ -120,11 +73,7 @@
                                                         <td>#{{ order.id }}</td>
                                                         <td>{{ order.createdAt|date('d/m/Y') }}</td>
                                                         <td>
-                                                            <span style="
-                                                                padding: 4px 10px;
-                                                                border-radius: 20px;
-                                                                font-size: 11px;
-                                                                font-weight: bold;
+                                                            <span style="padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: bold;
                                                                 background: {{ order.isPaid ? '#e1f5ee' : '#faeeda' }};
                                                                 color: {{ order.isPaid ? '#085041' : '#633806' }};">
                                                                 {{ order.status }}
@@ -132,32 +81,24 @@
                                                         </td>
                                                         <td>
                                                             {{ (order.orderCostTtc / 100)|number_format(2, ',', ' ') }} €
-                                                            <small style="color: #687188;">
-                                                                ({{ order.quantity }} article{{ order.quantity > 1 ? 's' : '' }})
-                                                            </small>
+                                                            <small style="color: #687188;">({{ order.quantity }} article{{ order.quantity > 1 ? 's' : '' }})</small>
                                                         </td>
                                                         <td>
                                                             {% if order.isPaid %}
                                                                 <a href="{{ path('app_invoice_download', {id: order.id}) }}"
-                                                                class="btn btn-fill-out btn-sm"
-                                                                style="background: #FF324D; color: white;
-                                                                        border: none; font-size: 12px;">
+                                                                   class="btn btn-fill-out btn-sm"
+                                                                   style="background: #FF324D; color: white; border: none; font-size: 12px;">
                                                                     Facture PDF
                                                                 </a>
                                                             {% else %}
-                                                                <span style="color: #687188; font-size: 12px;
-                                                                            font-style: italic;">
-                                                                    En attente
-                                                                </span>
+                                                                <span style="color: #687188; font-size: 12px; font-style: italic;">En attente</span>
                                                             {% endif %}
                                                         </td>
                                                     </tr>
                                                 {% endfor %}
                                             {% else %}
                                                 <tr>
-                                                    <td colspan="5" style="text-align: center;
-                                                                            color: #687188;
-                                                                            padding: 30px;">
+                                                    <td colspan="5" style="text-align: center; color: #687188; padding: 30px;">
                                                         Vous n'avez pas encore de commande.
                                                     </td>
                                                 </tr>
@@ -169,22 +110,22 @@
                         </div>
                     </div>
 
-					<div class="tab-pane fade active show" id="address" role="tabpanel" aria-labelledby="address-tab">
-                    	<div class="row">
+                    {# ── ADDRESS ── #}
+                    {# ← retire "active show" ici #}
+                    <div class="tab-pane fade" id="address" role="tabpanel" aria-labelledby="address-tab">
+                        <div class="row">
                             <div class="action d-flex mb-1">
-                                <a href="#" id="add_new_address" class="btn btn-fill-out">Ajouter une nouveau</a>  
+                                <a href="#" id="add_new_address" class="btn btn-fill-out">Ajouter une nouveau</a>
                             </div>
-
-                            <div class="col-lg-12" id="add_form">
-                                <form action=""> 
+                            <div class="col-lg-12 d-none" id="add_form">
+                                <form action="">
                                     <div class="row">
-                                         <div class="form-group col-md-12 mb-3">
+                                        <div class="form-group col-md-12 mb-3">
                                             <label>Type d'adresse<span class="required">*</span></label>
-
-                                                <select name="address_type" id="" class="form-control">
-                                                    <option value="Facturation">Facturation</option>
-                                                    <option value="Expédition">Expédition</option>
-                                                </select>
+                                            <select name="address_type" class="form-control">
+                                                <option value="Facturation">Facturation</option>
+                                                <option value="Expédition">Expédition</option>
+                                            </select>
                                         </div>
                                         <div class="form-group col-md-12 mb-3">
                                             <label>Nom<span class="required">*</span></label>
@@ -198,33 +139,27 @@
                                             <label>Rue<span class="required">*</span></label>
                                             <input required="" class="form-control" name="street" type="text">
                                         </div>
-                                         <div class="form-group col-md-6 mb-3">
+                                        <div class="form-group col-md-6 mb-3">
                                             <label>Ville<span class="required">*</span></label>
                                             <input required="" class="form-control" name="city" type="text">
                                         </div>
                                         <div class="form-group col-md-6 mb-3">
                                             <label>Code Postal<span class="required">*</span></label>
                                             <input required="" class="form-control" name="code_postal" type="text">
-                                            
                                         </div>
-                                         <div class="form-group col-md-6 mb-3">
+                                        <div class="form-group col-md-6 mb-3">
                                             <label>Pays<span class="required">*</span></label>
-                                            <select class="form-control" name="state" id="state">
-                                            </select>
+                                            <select class="form-control" name="state" id="state"></select>
                                         </div>
-
                                         <div class="d-flex mb-3">
                                             <button class="btn btn-fill-out">Sauvegarder</button>
                                         </div>
                                     </div>
                                 </form>
                             </div>
-
-                            <div class="col-lg-12 d-block" id="address_details">                             
+                            <div class="col-lg-12 d-block" id="address_details">
                                 <div class="card">
-                                    <div class="card-header">
-                                        <h3>Adresses</h3>
-                                    </div>
+                                    <div class="card-header"><h3>Adresses</h3></div>
                                     <div class="card-body">
                                         <div class="table-responsive address_content">
                                             <table class="table">
@@ -235,22 +170,21 @@
                                                         <th>Actions</th>
                                                     </tr>
                                                 </thead>
-
                                                 <tbody>
-                                                    {% for address in addresses %}    
+                                                    {% for address in addresses %}
                                                         <tr>
                                                             <td>#{{address.id}}</td>
                                                             <td>{{address.street}} {{address.codePostal}} {{address.city}} {{address.state}}</td>
                                                             <td>
-                                                                <a href="#" 
+                                                                <a href="#"
                                                                     data-id="{{address.id}}"
                                                                     data-address_type="{{address.addressType}}"
                                                                     data-client_name="{{address.clientName}}"
                                                                     data-name="{{address.name}}"
                                                                     data-street="{{address.street}}"
-                                                                    data-code_postal="{{address.codePostal}}" 
-                                                                    data-city="{{address.city}}" 
-                                                                    data-state="{{address.state}}"   
+                                                                    data-code_postal="{{address.codePostal}}"
+                                                                    data-city="{{address.city}}"
+                                                                    data-state="{{address.state}}"
                                                                     class="btn btn-fill-out btn-sm edit_address">Editer
                                                                 </a>
                                                             </td>
@@ -262,47 +196,44 @@
                                         </div>
                                     </div>
                                 </div>
-                                </div>                        
                             </div>
                         </div>
-                    </div>   {#  fin  tab-pane fade active show" id="address"  div class="row"  #}
-                </div>
+                    </div>
 
+                    {# ── ACCOUNT DETAILS ── #}
                     <div class="tab-pane fade" id="account-detail" role="tabpanel" aria-labelledby="account-detail-tab">
-						<div class="card">
-                        	<div class="card-header">
-                                <h3>Account Details</h3>
-                            </div>
+                        <div class="card">
+                            <div class="card-header"><h3>Account Details</h3></div>
                             <div class="card-body">
-                    			<p>Already have an account? <a href="#">Log in instead!</a></p>
+                                <p>Already have an account? <a href="#">Log in instead!</a></p>
                                 <form method="post" name="enq">
                                     <div class="row">
                                         <div class="form-group col-md-6 mb-3">
-                                        	<label>First Name <span class="required">*</span></label>
+                                            <label>First Name <span class="required">*</span></label>
                                             <input required="" class="form-control" name="name" type="text">
-                                         </div>
-                                         <div class="form-group col-md-6 mb-3">
-                                        	<label>Last Name <span class="required">*</span></label>
+                                        </div>
+                                        <div class="form-group col-md-6 mb-3">
+                                            <label>Last Name <span class="required">*</span></label>
                                             <input required="" class="form-control" name="phone">
                                         </div>
                                         <div class="form-group col-md-12 mb-3">
-                                        	<label>Display Name <span class="required">*</span></label>
+                                            <label>Display Name <span class="required">*</span></label>
                                             <input required="" class="form-control" name="dname" type="text">
                                         </div>
                                         <div class="form-group col-md-12 mb-3">
-                                        	<label>Email Address <span class="required">*</span></label>
+                                            <label>Email Address <span class="required">*</span></label>
                                             <input required="" class="form-control" name="email" type="email">
                                         </div>
                                         <div class="form-group col-md-12 mb-3">
-                                        	<label>Current Password <span class="required">*</span></label>
+                                            <label>Current Password <span class="required">*</span></label>
                                             <input required="" class="form-control" name="password" type="password">
                                         </div>
                                         <div class="form-group col-md-12 mb-3">
-                                        	<label>New Password <span class="required">*</span></label>
+                                            <label>New Password <span class="required">*</span></label>
                                             <input required="" class="form-control" name="npassword" type="password">
                                         </div>
                                         <div class="form-group col-md-12 mb-3">
-                                        	<label>Confirm Password <span class="required">*</span></label>
+                                            <label>Confirm Password <span class="required">*</span></label>
                                             <input required="" class="form-control" name="cpassword" type="password">
                                         </div>
                                         <div class="col-md-12">
@@ -312,18 +243,30 @@
                                 </form>
                             </div>
                         </div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-<!-- END SECTION SHOP -->
+                    </div>
 
+                    {# ── LOGOUT ── #}
+                    <div class="tab-pane fade" id="logout" role="tabpanel" aria-labelledby="logout-tab">
+                        <div class="card">
+                            <div class="card-header"><h3>Logout</h3></div>
+                            <div class="card-body">
+                                <p>From your account dashboard. you can easily check &amp; view your 
+                                    <a href="javascript:void(0);" onclick="$('#orders-tab').trigger('click')">recent orders</a>, 
+                                    manage your <a href="javascript:void(0);" onclick="$('#address-tab').trigger('click')">shipping and billing addresses</a> 
+                                    and <a href="javascript:void(0);" onclick="$('#account-detail-tab').trigger('click')">edit your password and account details.</a>
+                                </p>
+                                <a href="/logout" class="btn btn-fill-out py-2">Logout</a>
+                            </div>
+                        </div>
+                    </div>
 
+                </div> {# ← fin tab-content #}
+            </div> {# ← fin col-lg-9 #}
+        </div> {# ← fin row #}
+    </div> {# ← fin container #}
+</div> {# ← fin section #}
+</div> {# ← fin main_content #}
 
-</div>
-<!-- END MAIN CONTENT -->
 {% endblock %}
 
 

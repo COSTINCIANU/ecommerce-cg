@@ -1,6 +1,9 @@
 <div align="center">
-
-![Logo C.G Boutique](docs/Logo_C_G_Blanc.png)
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/Logo_C_G_Blanc.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/Logo_C_G_Normal_Noir.png">
+  <img alt="Logo C.G Boutique" src="docs/Logo_C_G_Normal_Noir.png">
+</picture>
 
 # C.G Boutique — Application E-commerce
 

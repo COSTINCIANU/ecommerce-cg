@@ -43,13 +43,14 @@ class OrderCrudController extends AbstractCrudController
             TextField::new('shipping_address')->hideOnIndex(),
             TextField::new('carrier_name'),
             TextField::new('paymentMethod'),
-            TextField::new('stripeClientSecret')->hideOnIndex(),
-            TextField::new('paypalClientSecret')->hideOnIndex(),
+            TextField::new('stripeClientSecret')->hideOnIndex()->hideOnDetail(),
+            TextField::new('paypalClientSecret')->hideOnIndex()->hideOnDetail(),
             IntegerField::new('quantity'),
             BooleanField::new('isPaid'),
             ChoiceField::new('status')
                 ->setChoices([
                     'En cours' => 'En cours',
+                    'Payée' => 'Payée',   // ← ajoute ça
                     'Commande validée' => 'Commande validée',
                     'Expédition en cours' => 'Expédition en cours',
                     'Commande livrée' => 'Commande livrée',

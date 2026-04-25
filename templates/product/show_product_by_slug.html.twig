@@ -126,9 +126,17 @@
                         <hr>
                     
                         <ul class="product-meta">
-                            <li>SKU: <a href="#">BE45VGRT</a></li>
-                            <li>Category: <a href="#">Culotes </a></li>
-                            <li>Tags: <a href="#" rel="tag">Cloth</a>, <a href="#" rel="tag">printed</a></li>
+                            {# Ou si tu veux garder un format style "BE45VGRT", tu peux générer quelque chose à partir de l'id : #}
+                            {# <li>SKU: <a href="#">{{ product.id }}</a></li> #}
+                            <li>SKU: <a href="#">CG{{ product.id }}</a></li>
+                            
+                            {# Ce qui donnera par exemple CG00193 pour le produit 193. C'est propre et unique pour chaque produit. #}
+                            {# <li>SKU: <a href="#">CG{{ '%05d'|format(product.id) }}</a></li> #}
+                            <li>Category: 
+                                {% for category in product.categories %}
+                                    <a href="#">{{ category.name }}</a>{% if not loop.last %}, {% endif %}
+                                {% endfor %}
+                            </li>
                         </ul>
                         <div class="product_share"><span>Share:</span>
                             <ul class="social_icons">

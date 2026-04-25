@@ -129,10 +129,12 @@
         <div class="container">
             <nav class="navbar navbar-expand-lg">
                 <a routerlink="/" class="navbar-brand" href="/">
+                    {# Logo C.G #}
+				    <img src="/assets/images/setting/Logo C.G/Logo C.G Normal.png" alt="logo C.G" with="80" height="80" srcset="">
                     <h2>
                         {# Logo du site #}
                         {# {{ app.session.get("setting").websiteName }} #}
-                        {{ setting ? setting.websiteName : 'C.G' }}
+                        {# {{ setting ? setting.websiteName : 'C.G' }} #}
                         
                         {# ✅ Après ? — gère le cas null #}
                         {# {{ app.session.get("setting") ? app.session.get("setting").websiteName : 'C.G' }} #}

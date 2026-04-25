@@ -122,7 +122,7 @@ final class CheckoutController extends AbstractController
                 // dd($order);
                 $order->setIsPaid(true);
                 $order->setPaymentMethod('STRIPE');
-
+                $order->setStatus('Payée'); // ← ajoute cette ligne
 
             $em->persist($order);
             $em->flush();

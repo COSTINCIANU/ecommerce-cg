@@ -4,7 +4,7 @@
 # Lance avec : docker compose -f docker-compose.staging.yml up -d
 # ═══════════════════════════════════════════════════════════════
 
-version: '3.8'
+# version: '3.8'
 
 services:
 

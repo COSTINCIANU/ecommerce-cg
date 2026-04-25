@@ -21,7 +21,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminDashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
-use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
+// use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Symfony\Component\HttpFoundation\Response;
 
 #[AdminDashboard(routePath: '/admin', routeName: 'admin')]
@@ -36,13 +36,14 @@ class DashboardController extends AbstractDashboardController
         // ]);
 
         // return $this->redirect($url);
-    
-        $url = $this->container->get(AdminUrlGenerator::class)
-            ->setController(ContactCrudController::class)
-            ->setAction('index')
-            ->generateUrl();
+        return $this->render('admin/dashboard.html.twig');
 
-        return $this->redirect($url);
+        // $url = $this->container->get(AdminUrlGenerator::class)
+        //     ->setController(ContactCrudController::class)
+        //     ->setAction('index')
+        //     ->generateUrl();
+
+        // return $this->redirect($url);
     }
     // public function index(): Response 
     // {   

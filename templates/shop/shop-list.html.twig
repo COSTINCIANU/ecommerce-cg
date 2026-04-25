@@ -1,0 +1,144 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Boutique — C.G{% endblock %}
+{% block stylesheets %}
+{{ parent() }}
+<style>
+    .pagination .page-item.active .page-link {
+        background-color: #e74c3c !important;
+        border-color: #e74c3c !important;
+        color: #fff !important;
+    }
+    .pagination .page-link {
+        color: #e74c3c !important;
+    }
+    .pagination .page-link:hover {
+        background-color: #e74c3c !important;
+        border-color: #e74c3c !important;
+        color: #fff !important;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+{# Inclusion de la template qui se affiche sur la page #}
+{% include "page_head/page_head.html.twig" with {'page_name': 'Boutique'} %}
+
+
+<div class="section">
+    <div class="container">
+        <div class="row">
+
+            {# ── SIDEBAR FILTRES ── #}
+            <div class="col-lg-3 col-md-4">
+                <div class="sidebar_widget">
+
+                    {# Catégories #}
+                    <div class="widget_title">
+                        <h2>Catégories</h2>
+                    </div>
+                    <ul class="widget_categories">
+                        <li>
+                            <a href="/shop-list" class="{{ currentCat is null ? 'active' : '' }}">
+                                Toutes les catégories
+                            </a>
+                        </li>
+                        {% for cat in categories %}
+                        <li>
+                            <a href="/shop-list?categorie={{ cat.slug }}"
+                               class="{{ currentCat == cat.slug ? 'active' : '' }}">
+                                {{ cat.name }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+
+                    {# Tri #}
+                    <div class="widget_title mt-4">
+                        <h2>Trier par</h2>
+                    </div>
+                    <ul class="widget_categories">
+                        <li><a href="/shop-list?{{ currentCat ? 'categorie=' ~ currentCat ~ '&' : '' }}tri=nouveautes">Nouveautés</a></li>
+                        <li><a href="/shop-list?{{ currentCat ? 'categorie=' ~ currentCat ~ '&' : '' }}tri=prix-asc">Prix croissant</a></li>
+                        <li><a href="/shop-list?{{ currentCat ? 'categorie=' ~ currentCat ~ '&' : '' }}tri=prix-desc">Prix décroissant</a></li>
+                    </ul>
+
+                </div>
+            </div>
+
+            {# ── GRILLE PRODUITS ── #}
+            <div class="col-lg-9 col-md-8">
+
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <p class="text-muted">{{ total }} produit{{ total > 1 ? 's' : '' }} trouvé{{ total > 1 ? 's' : '' }}</p>
+                </div>
+
+                <div class="row product_row">
+                    {% for product in products %}
+                    <div class="col-lg-4 col-md-6 col-sm-6">
+                        <div class="product">
+                            <div class="product_img">
+                                <a href="/product/{{ product.slug }}">
+                                    <img src="/assets/images/products/{{ product.imageUrls[0] }}"
+                                         alt="{{ product.name }}">
+                                </a>
+                                <div class="product_action_box">
+                                    <ul class="list_none pr_action_btn">
+                                        <li><a href="/wishlist/add/{{ product.id }}" class="btn btn-white"><i class="ti-heart"></i></a></li>
+                                        <li><a href="/product/{{ product.slug }}" class="btn btn-white"><i class="ti-search"></i></a></li>
+                                        <li><a href="/cart/add/{{ product.id }}" class="btn btn-white"><i class="linearicons-cart"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="product_info">
+                                {% if product.isNewArrival %}
+                                    <span class="badge badge-success">Nouveau</span>
+                                {% endif %}
+                                {% if product.isSpecialOffer %}
+                                    <span class="badge badge-danger">Promo</span>
+                                {% endif %}
+                                <h6 class="product_title">
+                                    <a href="/product/{{ product.slug }}">{{ product.name }}</a>
+                                </h6>
+                                <div class="product_price">
+                                    <span class="price">{{ (product.soldePrice / 100)|number_format(2, ',', ' ') }} €</span>
+                                    {% if product.regularPrice > product.soldePrice %}
+                                        <del class="text-muted">{{ (product.regularPrice / 100)|number_format(2, ',', ' ') }} €</del>
+                                        <span class="badge badge-danger ms-1">
+                                            -{{ ((1 - product.soldePrice / product.regularPrice) * 100)|round }}%
+                                        </span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="col-12 text-center py-5">
+                        <p>Aucun produit trouvé dans cette catégorie.</p>
+                        <a href="/shop-list" class="btn btn-fill-out">Voir tous les produits</a>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                {# ── PAGINATION ── #}
+                {% if totalPages > 1 %}
+                <div class="d-flex justify-content-center mt-4">
+                    <ul class="pagination">
+                        {% for p in 1..totalPages %}
+                        <li class="page-item {{ p == currentPage ? 'active' : '' }}">
+                            <a class="page-link"
+                               href="/shop-list?page={{ p }}{{ currentCat ? '&categorie=' ~ currentCat : '' }}{{ currentTri ? '&tri=' ~ currentTri : '' }}">
+                                {{ p }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

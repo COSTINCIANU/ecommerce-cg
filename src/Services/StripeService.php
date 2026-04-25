@@ -31,32 +31,47 @@ class StripeService
 
 
 
+    // public function getPublicKey()
+    // {
+    //     $config = $this->paymentMethodRepo->findOneByName("Stripe");
+    //     // dd($config);
+    //     if (($_ENV['APP_ENV']) === 'dev')    {
+    //         // Mode développment
+    //         return $config->getTestPublicApiKey();
+    //     } else {
+    //         // Mode production 
+    //          return $config->getProdPublicApiKey();
+    //     }
+        
+    // }
+
+
+    // public function getPrivateKey()
+    // {
+    //     $config = $this->paymentMethodRepo->findOneByName("Stripe");
+
+    //     if (($_ENV['APP_ENV']) === 'dev'){
+    //         // Mode développment
+    //         return $config->getTestPrivateApiKey();
+    //     } else {
+    //         // Mode production 
+    //          return $config->getProdPrivateApiKey();
+    //     }
+        
+    // }
+
+
     public function getPublicKey()
     {
         $config = $this->paymentMethodRepo->findOneByName("Stripe");
-        // dd($config);
-        if (($_ENV['APP_ENV']) === 'dev')    {
-            // Mode développment
-            return $config->getTestPublicApiKey();
-        } else {
-            // Mode production 
-             return $config->getProdPublicApiKey();
-        }
-        
+        // Temporairement forcé en test pour les captures
+        return $config->getTestPublicApiKey();
     }
-
 
     public function getPrivateKey()
     {
         $config = $this->paymentMethodRepo->findOneByName("Stripe");
-
-        if (($_ENV['APP_ENV']) === 'dev'){
-            // Mode développment
-            return $config->getTestPrivateApiKey();
-        } else {
-            // Mode production 
-             return $config->getProdPrivateApiKey();
-        }
-        
+        // Temporairement forcé en test pour les captures
+        return $config->getTestPrivateApiKey();
     }
 }
