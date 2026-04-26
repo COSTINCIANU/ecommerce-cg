@@ -119,38 +119,33 @@ symfony serve
 
 L'application est accessible sur `http://localhost:8000`
 
----
 
-## Docker
+## ⚙️ Configuration Docker
 
-### Site normal (port 8080)
+Les fichiers `docker-compose.yml` et `docker-compose.staging.yml` ne sont pas 
+committés pour des raisons de sécurité.
 
-```bash
-# Démarrer
-docker compose -f docker-compose.yml up -d
+### 🚀 Pour démarrer le projet :
 
-# Arrêter
-docker compose -f docker-compose.yml down
-```
+1. Copie les fichiers exemple :
+\```bash
+cp docker-compose.example.yml docker-compose.yml
+cp docker-compose.staging.example.yml docker-compose.staging.yml
+\```
 
-### Environnement staging — Tests OWASP ZAP (port 8090)
+2. Crée ton fichier de variables :
+\```bash
+cp .env.docker.example .env.docker
+\```
 
-```bash
-# Démarrer
-docker compose -f docker-compose.staging.yml up -d
+3. Remplis tes vraies valeurs dans `.env.docker`
 
-# Arrêter
-docker compose -f docker-compose.staging.yml down
-```
+4. Lance Docker :
+\```bash
+docker compose --env-file .env.docker up -d
+\```
 
-| URL | Description |
-|-----|-------------|
-| `http://localhost:8080` | Site normal |
-| `http://localhost:8081` | phpMyAdmin normal |
-| `http://localhost:8090` | Site staging (ZAP) |
-| `http://localhost:8091` | phpMyAdmin staging |
 
----
 
 ## Tests
 

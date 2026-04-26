@@ -43,6 +43,7 @@
         </div> #}
         <div class="container page-content">
             {{ page.content | raw }}
+            {# {{ page.content|striptags('<p><br><strong><em><ul><li>')|raw }} #}
         </div>
     </div>
 </div>

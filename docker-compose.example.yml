@@ -1,11 +1,13 @@
 # ═══════════════════════════════════════════════════════════════
-# Docker Compose — C.G Boutique E-commerce
-# Orchestre 4 conteneurs : nginx, php, mysql, phpmyadmin
+# Docker Compose EXEMPLE — C.G Boutique E-commerce
+# ⚠️  Copie ce fichier et renomme-le docker-compose.yml
+#     puis remplace les valeurs YOUR_* par tes vraies valeurs
 # Auteur : Gheorghina Costincianu
 # ═══════════════════════════════════════════════════════════════
 
-# Version de la syntaxe Docker Compose
-# version: '3.8'
+# Comment utiliser :
+# cp docker-compose.example.yml docker-compose.yml
+# Puis modifie docker-compose.yml avec tes vraies valeurs
 
 services:
 
@@ -39,6 +41,21 @@ services:
   # Exécute le code PHP de ton application Symfony
   # Construit depuis le Dockerfile personnalisé
   # ──────────────────────────────────────────────────────────────
+
+  # ──────────────────────────────────────────────────────────────
+  # ENTRYPOINT — Script de démarrage du conteneur PHP
+  # Exécuté automatiquement à chaque démarrage du conteneur
+  #
+  # 1. Crée le dossier asset_mapper si il n'existe pas
+  #    (nécessaire pour Symfony Asset Mapper en prod)
+  # 2. Crée le dossier log si il n'existe pas
+  # 3. Donne les permissions 777 sur var/ (1ère fois)
+  # 4. Donne l'ownership à www-data (utilisateur Nginx/PHP)
+  # 5. Attend 2 secondes que le volume Windows soit monté
+  # 6. Refix les permissions après montage du volume
+  # 7. Refix l'ownership après montage du volume
+  # 8. Lance PHP-FPM (serveur PHP)
+  # ──────────────────────────────────────────────────────────────
   php:
     build:
       # Dossier racine du projet comme contexte de build
@@ -47,35 +64,28 @@ services:
       dockerfile: docker/php/Dockerfile
     # Nom du conteneur dans Docker
     container_name: cg_php
+    # Charge les variables depuis ton fichier .env.docker (non commité)
+    env_file:
+      - .env.docker
     entrypoint: >
       sh -c "mkdir -p /var/www/html/var/cache/prod/asset_mapper &&
-            chown -R www-data:www-data /var/www/html/var &&
+            mkdir -p /var/www/html/var/log &&
             chmod -R 777 /var/www/html/var &&
+            chown -R www-data:www-data /var/www/html/var &&
+            sleep 2 &&
+            chmod -R 777 /var/www/html/var &&
+            chown -R www-data:www-data /var/www/html/var &&
             php-fpm"
     volumes:
-      # Monte mon projet dans le conteneur (synchronisation temps réel)
       - .:/var/www/html
-      # - ./public/assets:/var/www/html/public/assets
-      - /dev/null:/var/www/html/.env.local  # ← ajoute cette ligne 
-    
+      - /dev/null:/var/www/html/.env.local
     environment:
       - APP_ENV=prod
-      - APP_SECRET=87a0fdd7d3c25f1639f96c7fe4b2ed6d
-      - DATABASE_URL=mysql://cg_user:cg_password@mysql:3306/ecommerce_cg?serverVersion=8.0
-      - MAILER_DSN=mailjet+smtp://7d305fa8525ab4fb4d06d3ba5f874a2c:1c4be730a55e6e6f95b43f1a434860b8@in-v3.mailjet.com:587
+      # ⚠️ Remplace ces valeurs par tes vraies valeurs dans docker-compose.yml
+      - APP_SECRET=YOUR_APP_SECRET_32CHARS_MIN
+      - DATABASE_URL=mysql://YOUR_DB_USER:YOUR_DB_PASSWORD@mysql:3306/ecommerce_cg?serverVersion=8.0
+      - MAILER_DSN=YOUR_MAILER_DSN
       - MESSENGER_TRANSPORT_DSN=doctrine://default?auto_setup=0
-    # environment:
-    #   # Mode production pour Symfony
-    #   - APP_ENV=prod
-    #   # Clé secrète Symfony (récupérée depuis .env.docker)
-    #   - APP_SECRET=${APP_SECRET}
-    #   # URL de connexion à la BDD MySQL dans Docker
-    #   # Format : mysql://user:password@host:port/database
-    #   - DATABASE_URL=mysql://cg_user:cg_password@mysql:3306/ecommerce_cg?serverVersion=8.0
-    #   # Configuration email Mailjet pour la production
-    #   - MAILER_DSN=${MAILER_DSN}
-    #   # Clé secrète Stripe pour les paiements
-    #   - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
     depends_on:
       # PHP démarre seulement après MySQL
       - mysql
@@ -93,14 +103,14 @@ services:
     # Nom du conteneur dans Docker
     container_name: cg_mysql
     environment:
-      # Mot de passe du super admin MySQL
-      MYSQL_ROOT_PASSWORD: root_password
+      # ⚠️ Remplace ces valeurs par tes vrais mots de passe
+      MYSQL_ROOT_PASSWORD: YOUR_ROOT_PASSWORD
       # Nom de la base de données créée automatiquement
       MYSQL_DATABASE: ecommerce_cg
       # Utilisateur créé automatiquement pour l'application
-      MYSQL_USER: cg_user
+      MYSQL_USER: YOUR_DB_USER
       # Mot de passe de l'utilisateur applicatif
-      MYSQL_PASSWORD: cg_password
+      MYSQL_PASSWORD: YOUR_DB_PASSWORD
     ports:
       # Port 3307 de ta machine → Port 3306 du conteneur
       # On utilise 3307 pour éviter le conflit avec ton MySQL local
@@ -127,9 +137,9 @@ services:
     environment:
       # Adresse du serveur MySQL (nom du service Docker)
       PMA_HOST: mysql
-      # Identifiants de connexion à MySQL
-      PMA_USER: cg_user
-      PMA_PASSWORD: cg_password
+      # ⚠️ Remplace ces valeurs par tes vrais identifiants
+      PMA_USER: YOUR_DB_USER
+      PMA_PASSWORD: YOUR_DB_PASSWORD
     depends_on:
       # PhpMyAdmin démarre seulement après MySQL
       - mysql

@@ -1,10 +1,14 @@
 # ═══════════════════════════════════════════════════════════════
-# docker-compose.staging.yml — C.G Boutique
+# docker-compose.staging.example.yml — C.G Boutique
+# ⚠️  Copie ce fichier et renomme-le docker-compose.staging.yml
+#     puis remplace les valeurs YOUR_* par tes vraies valeurs
 # Environnement STAGING pour tests OWASP ZAP
 # Lance avec : docker compose -f docker-compose.staging.yml up -d
 # ═══════════════════════════════════════════════════════════════
 
-# version: '3.8'
+# Comment utiliser :
+# cp docker-compose.staging.example.yml docker-compose.staging.yml
+# Puis modifie docker-compose.staging.yml avec tes vraies valeurs
 
 services:
 
@@ -40,21 +44,16 @@ services:
       # Mode test — pas de prod !
       APP_ENV: prod
       APP_DEBUG: "0"
-      APP_SECRET: staging_secret_key_32chars_min_xx
+      # ⚠️ Remplace par une vraie clé de 32 caractères minimum
+      APP_SECRET: YOUR_STAGING_SECRET_32CHARS_MIN
       # Base de données SÉPARÉE de la prod
-      DATABASE_URL: "mysql://cg_user:cg_password@mysql_staging:3306/ecommerce_cg_staging"
-      # Clés TEST Stripe (pas de vrai argent !)
-      STRIPE_SECRET_KEY: sk_test_REMPLACER_PAR_VOTRE_CLE
-      STRIPE_PUBLIC_KEY: pk_test_REMPLACER_PAR_VOTRE_CLE
-      STRIPE_WEBHOOK_SECRET: whsec_REMPLACER_PAR_VOTRE_CLE
-      # PayPal en mode sandbox
-      # PAYPAL_CLIENT_SECRET: REMPLACER_PAR_VOTRE_SECRET
-      # PayPal en mode sandbox
-      # PAYPAL_CLIENT_SECRET: your_sandbox_secret
-
+      DATABASE_URL: "mysql://YOUR_DB_USER:YOUR_DB_PASSWORD@mysql_staging:3306/ecommerce_cg_staging"
+      # ⚠️ Clés TEST Stripe — commence par sk_test_ (pas de vrai argent !)
+      STRIPE_SECRET_KEY: sk_test_YOUR_STRIPE_SECRET_KEY
+      STRIPE_PUBLIC_KEY: pk_test_YOUR_STRIPE_PUBLIC_KEY
+      STRIPE_WEBHOOK_SECRET: whsec_YOUR_STRIPE_WEBHOOK_SECRET
       # Emails désactivés (aucun mail envoyé pendant les tests ZAP)
       MAILER_DSN: "null://null"
-
     depends_on:
       - mysql_staging
     networks:
@@ -66,10 +65,11 @@ services:
     image: mysql:8.0
     container_name: cg_mysql_staging
     environment:
-      MYSQL_ROOT_PASSWORD: root_staging
+      # ⚠️ Remplace ces valeurs par tes vrais mots de passe
+      MYSQL_ROOT_PASSWORD: YOUR_ROOT_STAGING_PASSWORD
       MYSQL_DATABASE: ecommerce_cg_staging   # Nom différent de la prod !
-      MYSQL_USER: cg_user
-      MYSQL_PASSWORD: cg_password
+      MYSQL_USER: YOUR_DB_USER
+      MYSQL_PASSWORD: YOUR_DB_PASSWORD
     volumes:
       # Données de test dans un volume séparé
       - mysql_staging_data:/var/lib/mysql
@@ -86,8 +86,9 @@ services:
       - "8091:80"   # http://localhost:8091
     environment:
       PMA_HOST: mysql_staging
-      PMA_USER: cg_user
-      PMA_PASSWORD: cg_password
+      # ⚠️ Remplace ces valeurs par tes vrais identifiants
+      PMA_USER: YOUR_DB_USER
+      PMA_PASSWORD: YOUR_DB_PASSWORD
     depends_on:
       - mysql_staging
     networks:

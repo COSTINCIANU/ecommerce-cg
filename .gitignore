@@ -6,11 +6,20 @@
 .env.*.local
 .env*
 .vscode/
+
+
+ecommerce-cg.sql
+
+docker-compose.yml
+docker-compose.staging.yml
+.env.docker
+
 database_uml
 
 # Fichiers personnels
 database_ulm.txt
 Note Memoire.txt
+
 test_mail.php
 routes.txt
 
@@ -33,7 +42,5 @@ node_modules/
 /public/assets/
 /assets/vendor/
 ###< symfony/asset-mapper ###
-.env.docker
-.env.docker
-ecommerce-cg.sql
+
 

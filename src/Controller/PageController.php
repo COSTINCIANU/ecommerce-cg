@@ -6,6 +6,7 @@ use App\Repository\PageRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+// use Symfony\Component\HtmlSanitizer\HtmlSanitizerInterface;
 
 final class PageController extends AbstractController
 {
@@ -28,6 +29,27 @@ final class PageController extends AbstractController
         ]);
     }
 
+    // public function index(string $slug, PageRepository $pageRepo,
+    //     HtmlSanitizerInterface $sanitizer
+    // ): Response 
+    // {
+    //     $page = $pageRepo->findOneBy(["slug" => $slug]);
+
+    //     if (!$page) {
+    //         return $this->render('page/notfound.html.twig', [
+    //             'controller_name' => 'PageController',
+    //             'page' => $page,
+    //         ]);
+    //     }
+
+    //     $content = $sanitizer->sanitize($page->getContent());
+
+    //     return $this->render('page/index.html.twig', [
+    //         'controller_name' => 'PageController',
+    //         'page' => $page,
+    //         'content' => $content,
+    //     ]);
+    // }
 
     // #[Route('/page/notfound', name: 'app_page')]
     // public function notfound(): Response
