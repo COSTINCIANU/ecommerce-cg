@@ -19,7 +19,10 @@
         <!-- ✅ Ajoute cette ligne — indique à PHPUnit quelle classe Kernel utiliser -->
         <server name="KERNEL_CLASS" value="App\Kernel" />
          <!-- ✅ Ajoute MAILER_DSN pour les tests -->
-        <env name="MAILER_DSN" value="null://null" />
+        <!-- <env name="MAILER_DSN" value="null://null" /> -->
+        <!-- <env name="MAILER_DSN" value="smtp://null" /> -->
+        <env name="MAILER_DSN" value="null://null" force="true" />
+
         
         <!-- ###+ stripe/stripe-php ### -->
         <env name="STRIPE_SECRET_KEY" value="sk_test_***"/>

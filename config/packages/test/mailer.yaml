@@ -1,0 +1,6 @@
+# Mailer pour les tests — utilise un transport en mémoire
+framework:
+    mailer:
+        dsn: 'smtp://localhost'
+        # dsn: 'smtp://null'
+        
