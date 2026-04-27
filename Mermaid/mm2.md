@@ -3,8 +3,7 @@
 **Projet :** C.G Boutique — E-commerce mode (solo)  
 **Stack :** Symfony 7.4 · PHP 8.2 · MySQL/MariaDB · Doctrine ORM  
 **Source :** Basé sur le schéma SQL réel `ecommerce-cg.sql`  
-**Certification :** CDA — RNCP37873 Niveau 6  
-**Auteure :** Gheorghina COSTINCIANU — ADRAR Formation
+**Auteure :** Gheorghina COSTINCIANU 
 
 ---
 
