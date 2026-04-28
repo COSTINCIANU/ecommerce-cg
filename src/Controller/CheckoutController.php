@@ -17,6 +17,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Mime\Address;
+
 final class CheckoutController extends AbstractController
 {
     private SessionInterface $session;
@@ -101,7 +105,9 @@ final class CheckoutController extends AbstractController
     #[Route('/stripe/payment/success', name: 'app_stripe_payment_success')]
     public function paymentSuccess(Request $req, 
         OrderRepository $orderRepo, 
-        EntityManagerInterface $em): Response 
+        EntityManagerInterface $em,
+        MailerInterface $mailer
+        ): Response 
     { 
 
         // Récupérer le client secret de l'intention de paiement à partir de la requête
@@ -122,10 +128,21 @@ final class CheckoutController extends AbstractController
                 // dd($order);
                 $order->setIsPaid(true);
                 $order->setPaymentMethod('STRIPE');
-                $order->setStatus('Payée'); // ← ajoute cette ligne
+                $order->setStatus('Payée'); // ajoute cette ligne
 
             $em->persist($order);
             $em->flush();
+
+            // ← ajoute ici après le flush
+            $email = (new TemplatedEmail())
+                ->from(new Address('costincianu.gheorghina@gmail.com', 'C.G Boutique'))
+                ->to($order->getUser()->getEmail())
+                ->subject('Confirmation de votre commande #' . $order->getId())
+                ->htmlTemplate('emails/confirmation_commande.html.twig')
+                ->context(['order' => $order]);
+            $mailer->send($email);
+
+            // return $this->render('payment/index.html.twig', [...]);
 
             // Mettre à jour le statut de la commande pour indiquer que le paiement a réussi
             return $this->render('payment/index.html.twig', [
@@ -137,7 +154,11 @@ final class CheckoutController extends AbstractController
    
 
     #[Route('/paypal/payment/success', name: 'app_paypal_payment_success')]
-    public function paypalPaymentSuccess(Request $req, OrderRepository $orderRepo, EntityManagerInterface $em): Response 
+    public function paypalPaymentSuccess(Request $req, 
+        OrderRepository $orderRepo, 
+        EntityManagerInterface $em,
+        // MailerInterface $mailer
+        ): Response 
     { 
         // Vider le panier après paiement PayPal ✅
         $this->cartService->clearCart();

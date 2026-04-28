@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmation de commande — C.G Boutique</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background-color: #f5f5f5; color: #333; }
+        .container { max-width: 600px; margin: 30px auto; background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .header { background-color: #292b2c; padding: 30px; text-align: center; }
+        .header h1 { color: #fff; font-size: 28px; letter-spacing: 2px; }
+        .header p { color: #FF324D; font-size: 14px; margin-top: 5px; }
+        .content { padding: 30px; }
+        .greeting { font-size: 16px; margin-bottom: 20px; }
+        .order-box { background: #f9f9f9; border: 1px solid #eee; border-radius: 6px; padding: 20px; margin-bottom: 25px; }
+        .order-box h2 { font-size: 16px; color: #292b2c; margin-bottom: 15px; border-bottom: 2px solid #FF324D; padding-bottom: 8px; }
+        .order-info { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px; }
+        .order-info span:first-child { color: #687188; }
+        .order-info span:last-child { font-weight: bold; color: #292b2c; }
+        .products-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        .products-table th { background: #292b2c; color: #fff; padding: 10px; text-align: left; font-size: 13px; }
+        .products-table td { padding: 10px; border-bottom: 1px solid #eee; font-size: 13px; }
+        .products-table tr:last-child td { border-bottom: none; }
+        .totals { background: #f9f9f9; border-radius: 6px; padding: 15px 20px; margin-bottom: 25px; }
+        .total-line { display: flex; justify-content: space-between; padding: 6px 0; font-size: 14px; border-bottom: 1px solid #eee; }
+        .total-line:last-child { border-bottom: none; font-weight: bold; font-size: 16px; color: #FF324D; }
+        .total-line span:first-child { color: #687188; }
+        .cta { text-align: center; margin: 25px 0; }
+        .cta a { background: #FF324D; color: #fff; padding: 12px 30px; border-radius: 4px; text-decoration: none; font-size: 14px; font-weight: bold; }
+        .footer { background: #292b2c; padding: 20px; text-align: center; }
+        .footer p { color: #687188; font-size: 12px; margin-bottom: 5px; }
+        .footer a { color: #FF324D; text-decoration: none; }
+        .badge { display: inline-block; background: #EAF3DE; color: #27500A; padding: 4px 12px; border-radius: 20px; font-size: 13px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <!-- Header -->
+        <div class="header">
+            <h1>C.G</h1>
+            <p>Boutique de vêtements féminins</p>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <p class="greeting">
+                Bonjour <strong>{{ order.user.fullName }}</strong>,<br><br>
+                Merci pour votre commande ! Nous avons bien reçu votre paiement et votre commande est en cours de traitement.
+            </p>
+
+            <!-- Infos commande -->
+            <div class="order-box">
+                <h2>Détails de la commande</h2>
+                <div class="order-info">
+                    <span>Numéro de commande</span>
+                    <span>#{{ order.id }}</span>
+                </div>
+                <div class="order-info">
+                    <span>Date</span>
+                    <span>{{ order.createdAt|date('d/m/Y') }}</span>
+                </div>
+                <div class="order-info">
+                    <span>Statut</span>
+                    <span><span class="badge">{{ order.status }}</span></span>
+                </div>
+                <div class="order-info">
+                    <span>Mode de paiement</span>
+                    <span>{{ order.paymentMethod }}</span>
+                </div>
+                <div class="order-info">
+                    <span>Transporteur</span>
+                    <span>{{ order.carrierName }}</span>
+                </div>
+            </div>
+
+            <!-- Produits -->
+            <table class="products-table">
+                <thead>
+                    <tr>
+                        <th>Produit</th>
+                        <th>Qté</th>
+                        <th>Prix unitaire</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for detail in order.orderDetails %}
+                    <tr>
+                        <td>{{ detail.productName }}</td>
+                        <td>{{ detail.quantity }}</td>
+                        <td>{{ (detail.productSoldePrice / 100)|number_format(2, ',', ' ') }} €</td>
+                        <td>{{ (detail.subTotal / 100)|number_format(2, ',', ' ') }} €</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <!-- Totaux -->
+            <div class="totals">
+                <div class="total-line">
+                    <span>Sous-total HT</span>
+                    <span>{{ (order.orderCostHt / 100)|number_format(2, ',', ' ') }} €</span>
+                </div>
+                <div class="total-line">
+                    <span>TVA (20%)</span>
+                    <span>{{ (order.taxe / 100)|number_format(2, ',', ' ') }} €</span>
+                </div>
+                <div class="total-line">
+                    <span>Frais de livraison ({{ order.carrierName }})</span>
+                    <span>{{ (order.carrierPrice / 100)|number_format(2, ',', ' ') }} €</span>
+                </div>
+                <div class="total-line">
+                    <span>Total TTC</span>
+                    <span>{{ (order.orderCostTtc / 100)|number_format(2, ',', ' ') }} €</span>
+                </div>
+            </div>
+
+            <!-- CTA -->
+            <div class="cta">
+                <a href="http://localhost:8000/account">Voir mes commandes</a>
+            </div>
+
+            <p style="font-size: 13px; color: #687188; text-align: center;">
+                Votre facture PDF est disponible dans votre espace client.<br>
+                Pour toute question, contactez-nous via notre formulaire de contact.
+            </p>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>C.G Boutique — Boutique de vêtements féminins</p>
+            <p>© 2026 C.G Boutique — <a href="http://localhost:8000">www.cg-boutique.fr</a></p>
+        </div>
+
+    </div>
+</body>
+</html>

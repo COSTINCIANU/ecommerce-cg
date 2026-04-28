@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 // #[ORM\HasLifecycleCallbacks]
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
@@ -22,6 +23,8 @@ class Product
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Le nom du produit est obligatoire')]
+    #[Assert\Length(min: 3, max: 255)]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
@@ -40,6 +43,7 @@ class Product
     private ?int $stock = null;
 
     #[ORM\Column]
+    #[Assert\Positive(message: 'Le prix soldé doit être positif')]
     private ?int $solde_price = null;
 
     #[ORM\Column]

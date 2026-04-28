@@ -222,8 +222,7 @@ class CartService {
     public function getCartDetails()
     {
         // Je récupere les données qui a dans le panier
-        $cart = $this->get('cart'); 
-        
+        $cart = $this->get('cart');    
         // On recupre les details dans un tableau
         $result = [
             'items' => [],
@@ -231,16 +230,13 @@ class CartService {
             'cart_count' => 0, // Par defaut je le mets a zero
             'quantity' => 0, // Par defaut je le mets a zero
         ];
-
         $sub_total = 0;
         $taxe_rate = 0;
 
         $setting = $this->settingRepo->findOneBy(["website_name" => "C.G"]);
-
         if($setting){
             $taxe_rate = $setting->getTaxeRate()/100;
         }
-
         // 1 seule requête pour tous les produits
         $productIds = array_keys($cart);
         $products = $this->productRepo->findByIds($productIds);
@@ -250,11 +246,8 @@ class CartService {
         foreach ($products as $p) {
             $productsById[$p->getId()] = $p;
         }
-
-        // Ton foreach original — rien ne change sauf la 1ère ligne
         foreach ($cart as $productId => $quantity) {
-            $product = $productsById[$productId] ?? null; // ← seul changement
-            
+            $product = $productsById[$productId] ?? null;            
             if($product) {
                 $current_sub_total = $product->getSoldePrice()*$quantity;
                 $sub_total += $current_sub_total;
