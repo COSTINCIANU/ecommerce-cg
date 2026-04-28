@@ -2,7 +2,10 @@
 
 namespace App\Controller\Admin;
 
-
+use App\Repository\OrderRepository;
+use App\Repository\ProductRepository;
+use App\Repository\UserRepository;
+use App\Repository\ContactRepository;
 
 use App\Controller\Admin\AddressCrudController;
 use App\Controller\Admin\CarrierCrudController;
@@ -27,24 +30,44 @@ use Symfony\Component\HttpFoundation\Response;
 #[AdminDashboard(routePath: '/admin', routeName: 'admin')]
 class DashboardController extends AbstractDashboardController
 {
+    
+    public function __construct(
+        private OrderRepository $orderRepo,
+        private ProductRepository $productRepo,
+        private UserRepository $userRepo,
+        private ContactRepository $contactRepo,
+    ) {}
+
     public function index(): Response
     {
-        // // ✅ Après
-        // $url = $this->generateUrl('admin', [
-        //     'crudController' => 'App\Controller\Admin\ContactCrudController',
-        //     'crudAction'     => 'index',
-        // ]);
-
-        // return $this->redirect($url);
-        return $this->render('admin/dashboard.html.twig');
-
-        // $url = $this->container->get(AdminUrlGenerator::class)
-        //     ->setController(ContactCrudController::class)
-        //     ->setAction('index')
-        //     ->generateUrl();
-
-        // return $this->redirect($url);
+        return $this->render('admin/dashboard.html.twig', [
+            'products_count' => $this->productRepo->count([]),
+            'orders_count'   => $this->orderRepo->count([]),
+            'users_count'    => $this->userRepo->count([]),
+            'messages_count' => $this->contactRepo->count([]),
+            'last_orders'    => $this->orderRepo->findBy([], ['id' => 'DESC'], 5),
+        ]);
     }
+
+    // public function index(): Response
+    // {
+    //     // // ✅ Après
+    //     // $url = $this->generateUrl('admin', [
+    //     //     'crudController' => 'App\Controller\Admin\ContactCrudController',
+    //     //     'crudAction'     => 'index',
+    //     // ]);
+
+    //     // return $this->redirect($url);
+    //     return $this->render('admin/dashboard.html.twig');
+
+    //     // $url = $this->container->get(AdminUrlGenerator::class)
+    //     //     ->setController(ContactCrudController::class)
+    //     //     ->setAction('index')
+    //     //     ->generateUrl();
+
+    //     // return $this->redirect($url);
+    // }
+
     // public function index(): Response 
     // {   
     //     return $this->redirectToRoute('admin_product_index');

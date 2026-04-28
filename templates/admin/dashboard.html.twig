@@ -1,6 +1,296 @@
 {% extends '@EasyAdmin/page/content.html.twig' %}
 
 {% block content %}
+<style>
+    .cg-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    .cg-card {
+        border-radius: 12px;
+        padding: 1.5rem;
+        color: #fff;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        transition: transform 0.2s, box-shadow 0.2s;
+        text-decoration: none;
+        display: block;
+    }
+    .cg-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        color: #fff;
+    }
+    .cg-card .card-icon {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+        opacity: 0.85;
+    }
+    .cg-card .card-number {
+        font-size: 2.8rem;
+        font-weight: 700;
+        line-height: 1;
+        margin-bottom: 0.3rem;
+    }
+    .cg-card .card-label {
+        font-size: 0.95rem;
+        opacity: 0.9;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    .cg-card.rouge     { background: linear-gradient(135deg, #FF324D, #c0001e); }
+    .cg-card.anthracite { background: linear-gradient(135deg, #292b2c, #1a1b1c); }
+    .cg-card.gris      { background: linear-gradient(135deg, #687188, #4a5268); }
+    .cg-card.sombre    { background: linear-gradient(135deg, #333333, #1a1a1a); }
+
+    .cg-section-title {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #687188;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        margin: 2rem 0 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid #FF324D;
+    }
+    .cg-table {
+        background: #fff;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+    }
+    .cg-table thead th {
+        background: #292b2c;
+        color: #fff;
+        font-size: 0.82rem;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        padding: 0.9rem 1rem;
+        border: none;
+    }
+    .cg-table tbody td {
+        padding: 0.85rem 1rem;
+        border-bottom: 1px solid #f0f0f0;
+        font-size: 0.9rem;
+        color: #333;
+        vertical-align: middle;
+    }
+    .cg-table tbody tr:last-child td { border-bottom: none; }
+    .cg-table tbody tr:hover { background: #fafafa; }
+    .badge-payee    { background: #e6f4ea; color: #27500A; padding: 4px 10px; border-radius: 20px; font-size: 0.78rem; font-weight: 600; }
+    .badge-attente  { background: #fff8e1; color: #7A5A00; padding: 4px 10px; border-radius: 20px; font-size: 0.78rem; font-weight: 600; }
+    .badge-annulee  { background: #fdecea; color: #991F00; padding: 4px 10px; border-radius: 20px; font-size: 0.78rem; font-weight: 600; }
+    .cg-btn {
+        background: #FF324D;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        padding: 6px 14px;
+        font-size: 0.82rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: background 0.2s;
+    }
+    .cg-btn:hover { background: #c0001e; color: #fff; }
+</style>
+
+<div style="padding: 1rem;">
+
+    <!-- Cartes stats -->
+    <div class="row g-3 mb-4">
+        <div class="col-12 col-sm-6 col-xl-3">
+            <div style="background:#FF324D; border-radius:8px; padding:1.2rem; color:#fff;">
+                <div style="font-size:2.5rem; font-weight:700;">{{ products_count }}</div>
+                <div style="font-size:0.85rem; text-transform:uppercase; letter-spacing:1px; opacity:0.9;">Produits</div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-xl-3">
+            <div style="background:#292b2c; border-radius:8px; padding:1.2rem; color:#fff;">
+                <div style="font-size:2.5rem; font-weight:700;">{{ orders_count }}</div>
+                <div style="font-size:0.85rem; text-transform:uppercase; letter-spacing:1px; opacity:0.9;">Commandes</div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-xl-3">
+            <div style="background:#687188; border-radius:8px; padding:1.2rem; color:#fff;">
+                <div style="font-size:2.5rem; font-weight:700;">{{ users_count }}</div>
+                <div style="font-size:0.85rem; text-transform:uppercase; letter-spacing:1px; opacity:0.9;">Utilisateurs</div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-xl-3">
+            <div style="background:#333333; border-radius:8px; padding:1.2rem; color:#fff;">
+                <div style="font-size:2.5rem; font-weight:700;">{{ messages_count }}</div>
+                <div style="font-size:0.85rem; text-transform:uppercase; letter-spacing:1px; opacity:0.9;">Messages</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dernières commandes EN DESSOUS -->
+    <div style="font-size:0.85rem; font-weight:600; color:#687188; text-transform:uppercase; letter-spacing:1.5px; margin-bottom:1rem; padding-bottom:0.5rem; border-bottom:2px solid #FF324D;">
+        Dernières commandes
+    </div>
+
+    <table style="width:100%; border-collapse:collapse; background:#fff; border-radius:8px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,0.06);">
+        <thead>
+            <tr style="background:#292b2c;">
+                <th style="padding:10px 14px; color:#fff; font-size:0.8rem; text-align:left;">#</th>
+                <th style="padding:10px 14px; color:#fff; font-size:0.8rem; text-align:left;">Client</th>
+                <th style="padding:10px 14px; color:#fff; font-size:0.8rem; text-align:left;">Montant TTC</th>
+                <th style="padding:10px 14px; color:#fff; font-size:0.8rem; text-align:left;">Paiement</th>
+                <th style="padding:10px 14px; color:#fff; font-size:0.8rem; text-align:left;">Statut</th>
+                <th style="padding:10px 14px; color:#fff; font-size:0.8rem; text-align:left;">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in last_orders %}
+            <tr style="border-bottom:1px solid #f0f0f0;">
+                <td style="padding:10px 14px; font-weight:600;">#{{ order.id }}</td>
+                <td style="padding:10px 14px;">{{ order.clientName }}</td>
+                <td style="padding:10px 14px; font-weight:600;">{{ (order.orderCostTtc / 100)|number_format(2, ',', ' ') }} €</td>
+                <td style="padding:10px 14px;">{{ order.paymentMethod ?? 'N/A' }}</td>
+                <td style="padding:10px 14px;">
+                    {% if order.status == 'Payée' %}
+                        <span style="background:#e6f4ea; color:#27500A; padding:3px 10px; border-radius:20px; font-size:0.78rem; font-weight:600;">Payée</span>
+                    {% elseif order.status == 'En cours de paiement' %}
+                        <span style="background:#fff8e1; color:#7A5A00; padding:3px 10px; border-radius:20px; font-size:0.78rem; font-weight:600;">En attente</span>
+                    {% else %}
+                        <span style="background:#fdecea; color:#991F00; padding:3px 10px; border-radius:20px; font-size:0.78rem; font-weight:600;">{{ order.status ?? 'N/A' }}</span>
+                    {% endif %}
+                </td>
+                <td style="padding:10px 14px;">
+                    <a href="/admin?crudAction=detail&crudControllerFqcn=App\Controller\Admin\OrderCrudController&entityId={{ order.id }}" 
+                       style="background:#FF324D; color:#fff; border-radius:5px; padding:5px 12px; font-size:0.8rem; font-weight:600; text-decoration:none;">
+                        Voir
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+<!-- Titre -->
+{# <div style="margin-bottom: 1.5rem;">
+    <h2 style="font-size:1.6rem; font-weight:700; color:#292b2c; margin:0;">
+        Tableau de bord
+    </h2>
+    <p style="color:#687188; font-size:0.9rem; margin:0.3rem 0 0;">
+        Bienvenue dans l'administration de <strong>C.G Boutique</strong>
+    </p>
+</div> #}
+<!-- Statistiques -->
+{# <div class="cg-stats">
+    <div class="row g-3 mb-4">
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm" style="border-left: 4px solid #FF324D !important;">
+                <div class="card-body">
+                    <div style="color:#FF324D; font-size:2rem; font-weight:700;">{{ products_count }}</div>
+                    <div style="color:#687188; font-size:0.85rem; text-transform:uppercase; letter-spacing:1px;">Produits</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm" style="border-left: 4px solid #292b2c !important;">
+                <div class="card-body">
+                    <div style="color:#292b2c; font-size:2rem; font-weight:700;">{{ orders_count }}</div>
+                    <div style="color:#687188; font-size:0.85rem; text-transform:uppercase; letter-spacing:1px;">Commandes</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm" style="border-left: 4px solid #687188 !important;">
+                <div class="card-body">
+                    <div style="color:#687188; font-size:2rem; font-weight:700;">{{ users_count }}</div>
+                    <div style="color:#687188; font-size:0.85rem; text-transform:uppercase; letter-spacing:1px;">Utilisateurs</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm" style="border-left: 4px solid #333 !important;">
+                <div class="card-body">
+                    <div style="color:#333; font-size:2rem; font-weight:700;">{{ messages_count }}</div>
+                    <div style="color:#687188; font-size:0.85rem; text-transform:uppercase; letter-spacing:1px;">Messages</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> #}
+<!-- Statistiques -->
+{# <div class="cg-stats"> #}
+    {# <a href="/admin?crudAction=index&crudControllerFqcn=App\Controller\Admin\ProductCrudController" class="cg-card rouge"> #}
+    {# <a href="{{ ea_url().setController('App\\Controller\\Admin\\ProductCrudController').setAction('index').generateUrl() }}"
+        <div class="card-icon">👗</div>
+        <div class="card-number">{{ products_count }}</div>
+        <div class="card-label">Produits</div>
+    </a> #}
+    {# <a href="/admin?crudAction=index&crudControllerFqcn=App\Controller\Admin\OrderCrudController" class="cg-card anthracite"> #}
+    {# <a href="{{ ea_url().setController('App\\Controller\\Admin\\ProductCrudController').setAction('index').generateUrl() }}"    
+        <div class="card-icon">🛒</div>
+        <div class="card-number">{{ orders_count }}</div>
+        <div class="card-label">Commandes</div>
+    </a> #}
+    {# <a href="/admin?crudAction=index&crudControllerFqcn=App\Controller\Admin\UserCrudController" class="cg-card gris"> #}
+    {# <a href="{{ ea_url().setController('App\\Controller\\Admin\\ProductCrudController').setAction('index').generateUrl() }}"
+        <div class="card-icon">👤</div>
+        <div class="card-number">{{ users_count }}</div>
+        <div class="card-label">Utilisateurs</div>
+    </a> #}
+    {# <a href="/admin?crudAction=index&crudControllerFqcn=App\Controller\Admin\ContactCrudController" class="cg-card sombre"> #}
+    {# <a href="{{ ea_url().setController('App\\Controller\\Admin\\ProductCrudController').setAction('index').generateUrl() }}"
+        <div class="card-icon">✉️</div>
+        <div class="card-number">{{ messages_count }}</div>
+        <div class="card-label">Messages</div>
+    </a> #}
+{# </div> #}
+
+<!-- Dernières commandes -->
+{# <div class="cg-section-title">Dernières commandes</div>
+<div class="cg-table">
+    <table class="table mb-0">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Client</th>
+                <th>Montant TTC</th>
+                <th>Paiement</th>
+                <th>Statut</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in last_orders %}
+            <tr>
+                <td><strong>#{{ order.id }}</strong></td>
+                <td>{{ order.clientName }}</td>
+                <td><strong>{{ (order.orderCostTtc / 100)|number_format(2, ',', ' ') }} €</strong></td>
+                <td>{{ order.paymentMethod ?? 'N/A' }}</td>
+                <td>
+                    {% if order.status == 'Payée' %}
+                        <span class="badge-payee">Payée</span>
+                    {% elseif order.status == 'En cours de paiement' %}
+                        <span class="badge-attente">En attente</span>
+                    {% else %}
+                        <span class="badge-annulee">{{ order.status ?? 'N/A' }}</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="/admin?crudAction=detail&crudControllerFqcn=App\Controller\Admin\OrderCrudController&entityId={{ order.id }}" class="cg-btn">
+                        Voir
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div> #}
+{# {% endblock %} #}
+
+
+
+
+{# {% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block content %}
 <div class="row">
     <div class="col-md-3">
         <div class="card text-white bg-primary mb-3">
@@ -35,4 +325,7 @@
         </div>
     </div>
 </div>
+{% endblock %} #}
 {% endblock %}
+
+
