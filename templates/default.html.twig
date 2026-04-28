@@ -56,9 +56,13 @@
         {% endblock %}
     </head>
 
-<main>
-    <body>
-        
+<body>
+    <main>
+        {# <h1 style="position:absolute; left:-9999px;">{% block h1 %}C.G Boutique — Boutique de vêtements en ligne{% endblock %}</h1> #}
+        <h1 class="sr-only-h1">{% block h1 %}C.G Boutique — Boutique de vêtements en ligne{% endblock %}</h1>
+
+        {# <h1 class="visually-hidden">{% block h1 %}C.G Boutique — Boutique de vêtements en ligne{% endblock %}</h1> #}
+       
         {% block body %}{% endblock %}
 
 
@@ -67,7 +71,8 @@
 
         </div>
 
-    
+    </main>
+
         <script src="/assets/js/jquery-3.6.0.min.js"></script>
         <script src="/assets/js/popper.min.js"></script>
         <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
@@ -86,5 +91,4 @@
         <script type="module" src="/assets/js/compare.js"></script>
 
     </body>
-</main>
 </html>

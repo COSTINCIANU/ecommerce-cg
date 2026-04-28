@@ -8,7 +8,10 @@
 
         {# Open Graph #}
         <meta property="og:title" content="{% block og_title %}C.G Boutique{% endblock %}">
-        <meta property="og:description" content="{% block og_description %}C.G Boutique — Boutique de vêtements et accessoires en ligne. Découvrez notre collection de vêtements et accessoires.{% endblock %}">
+        <meta property="og:description" content="
+            {% block og_description %}C.G Boutique — 
+            Boutique de vêtements et accessoires en ligne. 
+            Découvrez notre collection de vêtements et accessoires.{% endblock %}">
         <meta property="og:type" content="website">
         <meta property="og:locale" content="fr_FR">
         <meta property="og:site_name" content="C.G Boutique">
@@ -24,6 +27,7 @@
         {# Theme color #}
         <meta name="theme-color" content="#000000">
 
+        
         <title>{% block title %}C.G Boutique{% endblock %} | Boutique de vêtements en ligne</title>
         <link rel="icon" href="/assets/images/Logo_C_G_Noir.png">
 
@@ -45,11 +49,8 @@
         <link rel="stylesheet" href="/assets/css/slick-theme.css" />
         <link rel="stylesheet" href="/assets/css/style.css" />
         <link rel="stylesheet" href="/assets/css/responsive.css" />
-        
-        {# <link rel="stylesheet" href="/assets/css/responsive_product.css"> #}
 
-        {% block stylesheets %}
-        {% endblock %}
+        {% block stylesheets %} {% endblock %}
 
         {% block javascripts %}
             {% block importmap %}{{ importmap('app') }}{% endblock %}
@@ -57,25 +58,23 @@
     </head>
 
 
-    <main>
 
-    <body>
+<body>
+    <main>
+        <h1 class="sr-only-h1">{% block h1 %}C.G Boutique — Boutique de vêtements en ligne{% endblock %}</h1>
+
+        {# <h1 style="position:absolute; left:-9999px;">{% block h1 %}C.G Boutique — Boutique de vêtements en ligne{% endblock %}</h1> #}
+        {# <h1 class="visually-hidden">{% block h1 %}C.G Boutique — Boutique de vêtements en ligne{% endblock %}</h1> #}
+
         {# Inclusion de header sur toutes les page  #}
         {% include("header/index.html.twig") %}
-        {% block body %}{% endblock %}
-
-
+        {% block body %}{% endblock %} 
         {# Message flash  #}
-        <div class="notification">
-
-        </div>
-
-
+        <div class="notification"> </div>
         {# Inclusion de footer sur toutes les page  #}
         {% include("footer/index.html.twig") %}
 
-
-  
+    </main>
         <script src="/assets/js/jquery-3.6.0.min.js"></script>
         <script src="/assets/js/popper.min.js"></script>
         <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
@@ -92,12 +91,6 @@
         <script src="/assets/js/scripts.js"></script>
         <script type="module" src="/assets/js/cart.js"></script>
         <script type="module" src="/assets/js/compare.js"></script>
-
-
         <script type="module" src="/assets/js/main.js"></script> 
-        
-
-    </body>
-    
-</main>
+    </body>   
 </html>

@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <title>Test Documentation</title>
+        <style>
+            body {
+                text-rendering: optimizeLegibility;
+                font-family: Source SansSerif Pro, Arial, sans-serif;
+                font-variant-ligatures: common-ligatures;
+                font-kerning: normal;
+                margin-left: 2rem;
+                background-color: #fff;
+                color: #000;
+            }
+
+            body > ul > li {
+                font-size: larger;
+            }
+
+            h2 {
+                font-size: larger;
+                text-decoration-line: underline;
+                text-decoration-thickness: 2px;
+                margin: 0;
+                padding: 0.5rem 0;
+            }
+
+            ul {
+                list-style: none;
+                margin: 0 0 2rem;
+                padding: 0 0 0 1rem;
+                text-indent: -1rem;
+            }
+
+            .success:before {
+                color: #4e9a06;
+                content: '✓';
+                padding-right: 0.5rem;
+            }
+
+            .defect {
+                color: #a40000;
+            }
+
+            .defect:before {
+                color: #a40000;
+                content: '✗';
+                padding-right: 0.5rem;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>Account Controller (App\Tests\Functional\Controller\AccountController)</h2>
+        <ul>
+            <li class="success">Account page redirects when not authenticated</li>
+            <li class="success">Account page redirects to login</li>
+            <li class="defect">Account page is accessible when authenticated</li>
+        </ul>
+        <h2>Api Stripe Controller (App\Tests\Functional\Controller\Api\ApiStripeController)</h2>
+        <ul>
+            <li class="success">Stripe payment intent without auth is refused</li>
+            <li class="defect">Stripe payment intent with invalid order returns error</li>
+        </ul>
+        <h2>Cart Controller (App\Tests\Functional\Controller\CartController)</h2>
+        <ul>
+            <li class="success">Cart page is accessible</li>
+            <li class="success">Add to cart responds</li>
+            <li class="success">Remove from cart responds</li>
+            <li class="success">Get cart responds</li>
+        </ul>
+        <h2>Cart Service (App\Tests\Unit\Service\CartService)</h2>
+        <ul>
+            <li class="success">Add to cart new product</li>
+            <li class="success">Add to cart increases quantity</li>
+            <li class="success">Add to cart with specific count</li>
+            <li class="success">Add multiple different products</li>
+            <li class="success">Remove to cart decreases quantity</li>
+            <li class="success">Remove to cart removes product when quantity reaches zero</li>
+            <li class="success">Remove to cart product not in cart</li>
+            <li class="success">Remove to cart more than available</li>
+            <li class="success">Clear cart</li>
+            <li class="success">Clear empty cart</li>
+            <li class="success">Get returns empty array for unknown key</li>
+            <li class="success">Update stores value in session</li>
+            <li class="success">Update carrier stores carrier in session</li>
+            <li class="success">Get cart details with empty cart</li>
+            <li class="success">Get cart details calculates totals correctly</li>
+            <li class="success">Get cart details removes non existent products</li>
+        </ul>
+        <h2>Checkout Controller (App\Tests\Functional\Controller\CheckoutController)</h2>
+        <ul>
+            <li class="success">Checkout page responds</li>
+            <li class="success">Stripe success page responds</li>
+            <li class="success">Paypal success page responds</li>
+        </ul>
+        <h2>Comment (App\Tests\Unit\Entity\Comment)</h2>
+        <ul>
+            <li class="success">Constructor sets created at</li>
+            <li class="success">Is published is false by default</li>
+            <li class="success">Set and get rating</li>
+            <li class="success">Set and get content</li>
+            <li class="success">Set and get email</li>
+            <li class="success">Set is published to true</li>
+            <li class="success">Set and get author</li>
+            <li class="success">Set and get product</li>
+            <li class="success">Set and get created at</li>
+            <li class="success">Full comment hydration</li>
+        </ul>
+        <h2>Compare Controller (App\Tests\Functional\Controller\CompareController)</h2>
+        <ul>
+            <li class="success">Compare page is accessible</li>
+            <li class="success">Add to compare responds</li>
+            <li class="success">Get compare responds</li>
+            <li class="success">Remove from compare responds</li>
+        </ul>
+        <h2>Home Controller (App\Tests\Functional\Controller\HomeController)</h2>
+        <ul>
+            <li class="success">Home page is accessible</li>
+            <li class="success">Home page contains site name</li>
+            <li class="success">Error page is accessible</li>
+        </ul>
+        <h2>Order (App\Tests\Unit\Entity\Order)</h2>
+        <ul>
+            <li class="success">Constructor sets created at</li>
+            <li class="success">Is paid is false by default</li>
+            <li class="success">Set is paid</li>
+            <li class="success">Set and get client name</li>
+            <li class="success">Set and get status</li>
+            <li class="success">Set and get order cost ttc</li>
+            <li class="success">Set and get order cost ht</li>
+            <li class="success">Set and get carrier name</li>
+            <li class="success">Set and get carrier price</li>
+            <li class="success">Set and get user</li>
+            <li class="success">Add order detail</li>
+            <li class="success">Remove order detail</li>
+            <li class="success">Set and get stripe client secret</li>
+            <li class="success">Full order hydration</li>
+        </ul>
+        <h2>Page Controller (App\Tests\Functional\Controller\PageController)</h2>
+        <ul>
+            <li class="success">Login page is accessible</li>
+            <li class="success">Register page is accessible</li>
+            <li class="success">Login page contains form</li>
+            <li class="success">Register page contains form</li>
+            <li class="success">Page route responds</li>
+            <li class="success">Logout redirects</li>
+        </ul>
+        <h2>Product (App\Tests\Unit\Entity\Product)</h2>
+        <ul>
+            <li class="success">Constructor sets created at</li>
+            <li class="success">Set name generates slug automatically</li>
+            <li class="success">Set name with special chars generates clean slug</li>
+            <li class="success">Set and get solde price</li>
+            <li class="success">Set and get regular price</li>
+            <li class="success">Solde price is less than regular price</li>
+            <li class="success">Set and get stock</li>
+            <li class="success">Set and get description</li>
+            <li class="success">Set and get image urls</li>
+            <li class="success">Is best seller is null by default</li>
+            <li class="success">Set and get is best seller</li>
+            <li class="success">Set and get is new arrival</li>
+            <li class="success">Set and get is featured</li>
+            <li class="success">Add category</li>
+            <li class="success">Remove category</li>
+            <li class="success">Add comment</li>
+            <li class="success">To string</li>
+            <li class="success">Full product hydration</li>
+        </ul>
+        <h2>Registration Controller (App\Tests\RegistrationController)</h2>
+        <ul>
+            <li class="success">Register page is accessible</li>
+            <li class="success">Register page contains form</li>
+        </ul>
+        <h2>Reset Password Controller (App\Tests\ResetPasswordController)</h2>
+        <ul>
+            <li class="defect">Reset password controller</li>
+        </ul>
+        <h2>User (App\Tests\Unit\Entity\User)</h2>
+        <ul>
+            <li class="success">Constructor initializes collections</li>
+            <li class="success">Constructor sets created at</li>
+            <li class="success">Is verified is false by default</li>
+            <li class="success">Get roles always contains role user</li>
+            <li class="success">Set roles admin includes role user</li>
+            <li class="success">Get roles no duplicates</li>
+            <li class="success">Get user identifier returns email</li>
+            <li class="success">Set and get email</li>
+            <li class="success">Set and get full name</li>
+            <li class="success">Set and get civility</li>
+            <li class="success">Add address</li>
+            <li class="success">Remove address</li>
+            <li class="success">Add order</li>
+            <li class="success">Add comment</li>
+            <li class="success">To string returns full name</li>
+            <li class="success">Full user hydration</li>
+        </ul>
+        <h2>Wish List Controller (App\Tests\Functional\Controller\WishListController)</h2>
+        <ul>
+            <li class="success">Wish list page is accessible</li>
+            <li class="success">Add to wish list responds</li>
+            <li class="success">Get wish list responds</li>
+            <li class="success">Remove from wish list responds</li>
+        </ul>
+    </body>
+</html>

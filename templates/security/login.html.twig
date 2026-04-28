@@ -28,7 +28,35 @@
                                     </div>
                                 {% endif %}
 
+
                                 <div class="form-group mb-3">
+                                    <label for="email">Adresse email</label>
+                                    <input type="text" 
+                                        id="email"
+                                        required="" 
+                                        name="email"
+                                        placeholder="Votre email"
+                                        class="form-control" 
+                                        autocomplete="email" 
+                                        value="{{ last_username }}" 
+                                        autofocus>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="password">Mot de passe</label>
+                                    <input type="password" 
+                                        id="password"
+                                        required="" 
+                                        name="password" 
+                                        placeholder="Votre mot de passe"
+                                        class="form-control" 
+                                        autocomplete="current-password">
+                                    <div class="text-end mt-2">
+                                        <a href="{{ path('app_forgot_password_request') }}">Mot de passe oublié ?</a>
+                                    </div>
+                                </div>
+
+                                {# <div class="form-group mb-3">
                                 <input type="text" required="" name="email"
                                         formcontrolname="email" placeholder="Your Email"
                                         class="form-control ng-untouched ng-pristine ng-invalid" autocomplete="email" value="{{ last_username }}" required autofocus>
@@ -36,14 +64,17 @@
 
                                 <div class="form-group mb-3">
                                     <input required="" type="password"
-                                        formcontrolname="password" name="password" placeholder="Password"
+                                        formcontrolname="password" 
+                                        name="password" placeholder="Password"
                                         class="form-control ng-untouched ng-pristine ng-invalid" autocomplete="email" required autofocus>
                                     
                                     <div class="text-end mt-2">
                                         <a href="{{ path('app_forgot_password_request') }}">Mot de passe oublié ?</a>
                                     </div>
 
-                                </div>
+                                </div> #}
+
+
 
                                 {# <div class="login_footer form-group mb-3">
                                     <div class="chek-form">
@@ -56,10 +87,12 @@
                                     </div><a href="#">Forgot password?</a>
                                 </div> #}
 
-                                <input type="hidden" name="_csrf_token" data-controller="csrf-protection" value="{{ csrf_token('authenticate') }}">
+                                <input type="hidden" name="_csrf_token" 
+                                    data-controller="csrf-protection" value="{{ csrf_token('authenticate') }}">
 
                                 <div class="form-group mb-3">
-                                    <button type="submit" name="login" class="btn btn-fill-out btn-block">Se connecter</button>
+                                    <button type="submit" name="login" 
+                                        class="btn btn-fill-out btn-block">Se connecter</button>
                                 </div>
                             </form>
                             

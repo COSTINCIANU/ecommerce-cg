@@ -1,20 +1,23 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Boutique — C.G{% endblock %}
+{# {% block title %}Boutique — C.G{% endblock %} #}
+
+{# Dans shop-list.html.twig #}
+{% block h1 %}Boutique — Catalogue de vêtements feminins{% endblock %}
 {% block stylesheets %}
 {{ parent() }}
 <style>
     .pagination .page-item.active .page-link {
-        background-color: #e74c3c !important;
-        border-color: #e74c3c !important;
+        background-color: #FF324D !important;
+        border-color: #FF324D !important;
         color: #fff !important;
     }
     .pagination .page-link {
-        color: #e74c3c !important;
+        color: #FF324D !important;
     }
     .pagination .page-link:hover {
-        background-color: #e74c3c !important;
-        border-color: #e74c3c !important;
+        background-color: #FF324D !important;
+        border-color: #FF324D !important;
         color: #fff !important;
     }
 </style>

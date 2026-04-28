@@ -1,6 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}C.G  | Page d'accueil {% endblock %}
+{# {% block title %}C.G  | Page d'accueil {% endblock %} #}
+
+
+{# Dans product/show.html.twig #}
+{% block h1 %}{{ product.name }} — C.G Boutique{% endblock %}
 
 {% block body %}
 <div class="main_content">

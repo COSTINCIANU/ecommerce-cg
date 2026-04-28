@@ -20,8 +20,10 @@ describe('Page Accueil — C.G Boutique', () => {
     cy.get('footer').should('exist')
   })
 
+  // it('Le logo C.G est affiché', () => {
+  //   cy.get('header').contains('C.G')
+  // })
   it('Le logo C.G est affiché', () => {
-    cy.get('header').contains('C.G')
+    cy.get('header').find('img[alt="logo C.G"]').should('exist')
   })
-
 })

@@ -3,8 +3,11 @@ describe('Compte Client — C.G Boutique', () => {
   // Commande de connexion réutilisable
   const login = () => {
     cy.visit('/login')
-    cy.get('input[name="email"]').type('costincianu.gheorghina@gmail.com')
-    cy.get('input[name="password"]').type('123456')
+    // cy.get('input[name="email"]').type('costincianu.gheorghina@gmail.com')
+    // cy.get('input[name="password"]').type('Georghina123456@')
+    cy.get('input[name="email"]').type('test.cypress@test.com')
+    cy.get('input[name="password"]').type('password123')
+
     cy.contains('button', 'Se connecter').click()
     cy.url().should('not.include', '/login')
   }

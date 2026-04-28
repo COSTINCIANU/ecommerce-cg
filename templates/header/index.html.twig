@@ -5,8 +5,8 @@
             <div  class="row align-items-center">
                 {# <div  class="col-md-6"> #}
                 <div class="col-12 col-lg-6">
-                    <div 
-                        class="d-flex align-items-center justify-content-center justify-content-md-start">
+                    <div class="d-flex align-items-center justify-content-center justify-content-md-start">
+                    {# <div class="d-flex align-items-center justify-content-center justify-content-lg-start">     #}
                         <div  class="me-3">
                             <div class="ddOutOfVision" id="msdrpdd20_msddHolder"
                                 style="height: 0px; overflow: hidden; position: absolute;">
@@ -65,8 +65,10 @@
                 </div>
 
 
-                <div  class="col-md-6">
-                    <div  class="text-center text-md-end">
+                {# <div  class="col-md-6">
+                    <div  class="text-center text-md-end"> #}
+                <div class="col-12 col-lg-6">
+                     <div class="text-center text-lg-end">    
                         <ul  class="header_list">
                             <li>
                                 <a href="/compare">
@@ -208,32 +210,6 @@
                                             </div>
                                         </div>
                                     {% endfor %}
-                                    {# <div  class="col-sm-4">
-                                        <div  class="header-banner"><img
-                                                 alt="menu_banner1"
-                                                src="/assets/files/megaCollection/8932488097310286313588503554459963159142614451684826970123.png">
-                                            <div  class="banne_info">
-                                                <h6 >15% Off</h6>
-                                                <h4 >Men's Fashion</h4><a
-                                                     href="http://localhost:4300/">Shop
-                                                    Now</a>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div  class="col-sm-4">
-                                        <div  class="header-banner"><img
-                                                 alt="menu_banner1"
-                                                src="/assets/files/megaCollection/1412527185807988177642011518607795945067036381684827015102.png">
-                                            <div  class="banne_info">
-                                                <h6 >23% Off</h6>
-                                                <h4 >Kids Fashion</h4><a
-                                                     href="http://localhost:4300/">Shop
-                                                    Now</a>
-                                            </div>
-                                        </div>
-                                    </div> #}
-
                                 </div>
                             </div>
                         </li>
@@ -255,11 +231,19 @@
                                 <i class="ion-ios-close-empty"></i>
                             </span>
 
-                            <form  novalidate="" class="ng-untouched ng-pristine ng-valid">
+                            {# <form  novalidate="" class="ng-untouched ng-pristine ng-valid">
                                 <input  type="text" placeholder="Search" id="search_input" class="form-control">
                                     <button  type="submit" class="search_icon">
                                         <i class="ion-ios-search-strong"></i>
                                     </button>
+                            </form> #}
+
+                            <form novalidate="" class="ng-untouched ng-pristine ng-valid">
+                                <label for="search_input" class="sr-only-h1">Rechercher un produit</label>
+                                <input type="text" placeholder="Search" id="search_input" class="form-control">
+                                <button type="submit" class="search_icon">
+                                    <i class="ion-ios-search-strong"></i>
+                                </button>
                             </form>
                         </div>
                         <div class="search_overlay"></div>
