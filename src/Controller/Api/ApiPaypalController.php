@@ -11,6 +11,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Mime\Address;
+
 
 final class ApiPaypalController extends AbstractController
 {
@@ -93,7 +97,9 @@ final class ApiPaypalController extends AbstractController
         $orderID,
         Request $req,
         OrderRepository $orderRepo,
-        EntityManagerInterface $em)
+        EntityManagerInterface $em,
+        MailerInterface $mailer
+        )
     {
        try {       
            $result = $this->captureOrder($orderID);
@@ -111,9 +117,19 @@ final class ApiPaypalController extends AbstractController
                     if($order) {
                         $order->setIsPaid(true);
                         $order->setPaymentMethod('PAYPAL');
+                        $order->setStatus('Payée'); 
 
                         $em->persist($order);
                         $em->flush();
+
+                        //  Email confirmation PayPal
+                        $email = (new TemplatedEmail())
+                            ->from(new Address('costincianu.gheorghina@gmail.com', 'C.G Boutique'))
+                            ->to($order->getUser()->getEmail())
+                            ->subject('Confirmation de votre commande #' . $order->getId())
+                            ->htmlTemplate('emails/confirmation_commande.html.twig')
+                            ->context(['order' => $order]);
+                        $mailer->send($email);
                     }
                 }
             }

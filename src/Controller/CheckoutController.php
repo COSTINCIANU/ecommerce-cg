@@ -157,15 +157,33 @@ final class CheckoutController extends AbstractController
     public function paypalPaymentSuccess(Request $req, 
         OrderRepository $orderRepo, 
         EntityManagerInterface $em,
-        // MailerInterface $mailer
+        MailerInterface $mailer
         ): Response 
     { 
-        // Vider le panier après paiement PayPal ✅
+         $user = $this->getUser();
+         
+        // Récupère la dernière commande PayPal de l'utilisateur
+        $order = $orderRepo->findOneBy(
+            ['user' => $user, 'isPaid' => true, 'paymentMethod' => 'PAYPAL'],
+            ['id' => 'DESC']
+        );
+
+        // Vider le panier après paiement PayPal
         $this->cartService->clearCart();
+
+        // Envoyer email confirmation si commande trouvée
+        if ($order) {
+            $email = (new TemplatedEmail())
+                ->from(new Address('costincianu.gheorghina@gmail.com', 'C.G Boutique'))
+                ->to($order->getUser()->getEmail())
+                ->subject('Confirmation de votre commande #' . $order->getId())
+                ->htmlTemplate('emails/confirmation_commande.html.twig')
+                ->context(['order' => $order]);
+            $mailer->send($email);
+        }
 
         return $this->render('payment/index.html.twig', [
             'controller_name' => 'PaymentController',
-            
         ]);
     }
         
