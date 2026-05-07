@@ -56,6 +56,14 @@
         {% endblock %}
     </head>
 
+<div id="cookie-banner" style="position:fixed; bottom:0; width:100%; background:#292b2c; color:#fff; padding:15px; z-index:9999; display:flex; justify-content:space-between; align-items:center;">
+    <p style="margin:0;">Ce site utilise des cookies pour améliorer votre expérience.</p>
+    <button onclick="document.getElementById('cookie-banner').style.display='none'" 
+            style="background:#FF324D; color:#fff; border:none; padding:8px 20px; border-radius:4px;">
+        Accepter
+    </button>
+</div>
+
 <body>
     <main>
         {# <h1 style="position:absolute; left:-9999px;">{% block h1 %}C.G Boutique — Boutique de vêtements en ligne{% endblock %}</h1> #}

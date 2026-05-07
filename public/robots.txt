@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /_profiler/
+Disallow: /_wdt/
+
+Sitemap: https://ton-domaine.com/sitemap.xml

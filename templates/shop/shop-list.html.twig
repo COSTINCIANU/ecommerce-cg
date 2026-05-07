@@ -5,8 +5,8 @@
 {# Dans shop-list.html.twig #}
 {% block h1 %}Boutique — Catalogue de vêtements feminins{% endblock %}
 {% block stylesheets %}
-{{ parent() }}
-<style>
+{# {{ parent() }}
+ <style>
     .pagination .page-item.active .page-link {
         background-color: #FF324D !important;
         border-color: #FF324D !important;
@@ -19,6 +19,22 @@
         background-color: #FF324D !important;
         border-color: #FF324D !important;
         color: #fff !important;
+    }
+</style> #}
+{{ parent() }}
+<style>
+    /* ... tes styles pagination existants ... */
+
+    /* ══ TABLETTE 768px ══ */
+    @media (max-width: 768px) {
+        /* .Tablette 768px → sidebar en tags cliquables horizontaux 
+        + grille 2 colonnes  */
+    }
+
+    /* ══ MOBILE 375px ══ */
+    @media (max-width: 375px) {
+        /* Mobile 375px → sidebar compacte en haut 
+            + grille 1 colonne + images plus grandes + pagination compacte.. */
     }
 </style>
 {% endblock %}

@@ -5,7 +5,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="C.G Boutique — Boutique de vêtements et accessoires en ligne. Découvrez notre collection.">
         <meta name="robots" content="index, follow">
-
         {# Open Graph #}
         <meta property="og:title" content="{% block og_title %}C.G Boutique{% endblock %}">
         <meta property="og:description" content="
@@ -15,24 +14,18 @@
         <meta property="og:type" content="website">
         <meta property="og:locale" content="fr_FR">
         <meta property="og:site_name" content="C.G Boutique">
-
         {# Twitter Card #}
         <meta name="twitter:card" content="summary">
         <meta name="twitter:title" content="{% block twitter_title %}C.G Boutique{% endblock %}">
-        <meta name="twitter:description" content="{% block twitter_description %}C.G Boutique — Boutique de vêtements et accessoires en ligne.{% endblock %}">
-
+        <meta name="twitter:description" content="{% block twitter_description %}
+                C.G Boutique — Boutique de vêtements et accessoires en ligne.{% endblock %}">
         {# Canonical URL #}
         <link rel="canonical" href="{{ app.request.uri }}">
-
         {# Theme color #}
         <meta name="theme-color" content="#000000">
-
         
         <title>{% block title %}C.G Boutique{% endblock %} | Boutique de vêtements en ligne</title>
         <link rel="icon" href="/assets/images/Logo_C_G_Noir.png">
-
-
-
         <link rel="stylesheet" href="/assets/css/animate.css">
         <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css" />
         <link rel="stylesheet" href="/assets/css/all.min.css" />
@@ -57,15 +50,18 @@
         {% endblock %}
     </head>
 
-
+{# <div id="cookie-banner" style="position:fixed; bottom:0; width:100%; background:#292b2c; 
+    color:#fff; padding:15px; z-index:9999; display:flex; justify-content:space-between; align-items:center;">
+    <p style="margin:0;">Ce site utilise des cookies pour améliorer votre expérience.</p>
+    <button onclick="document.getElementById('cookie-banner').style.display='none'" 
+            style="background:#FF324D; color:#fff; border:none; padding:8px 20px; border-radius:4px;">
+        Accepter
+    </button>
+</div> #}
 
 <body>
     <main>
         <h1 class="sr-only-h1">{% block h1 %}C.G Boutique — Boutique de vêtements en ligne{% endblock %}</h1>
-
-        {# <h1 style="position:absolute; left:-9999px;">{% block h1 %}C.G Boutique — Boutique de vêtements en ligne{% endblock %}</h1> #}
-        {# <h1 class="visually-hidden">{% block h1 %}C.G Boutique — Boutique de vêtements en ligne{% endblock %}</h1> #}
-
         {# Inclusion de header sur toutes les page  #}
         {% include("header/index.html.twig") %}
         {% block body %}{% endblock %} 

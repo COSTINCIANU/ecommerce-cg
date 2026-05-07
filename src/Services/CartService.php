@@ -237,8 +237,11 @@ class CartService {
         if($setting){
             $taxe_rate = $setting->getTaxeRate()/100;
         }
-        // 1 seule requête pour tous les produits
+
+
+        // Extraire les IDs du panier pour la requête optimisée
         $productIds = array_keys($cart);
+        // 1 seule requête pour tous les produits du panier N
         $products = $this->productRepo->findByIds($productIds);
 
         // Indexer par id pour accès rapide
@@ -269,7 +272,7 @@ class CartService {
                 $result['sub_total'] = $sub_total;
                 $result['sub_total_ht'] = round($sub_total/(1 + $taxe_rate));
                 $result['taxe'] = round($taxe_rate * $result['sub_total_ht']);
-                $result['cart_count'] += $quantity;  // je encremente la quantity 
+                $result['cart_count'] += $quantity; 
                 $result['quantity'] += $quantity; 
             
             } else {
@@ -283,7 +286,6 @@ class CartService {
         // si ça existe pas 
         if(!$carrier){
             // Je récupere depuis la bdd 
-            // $carrier = $this->carrierRepo->findAll()[0] ?? null;
             $carrier = $this->carrierRepo->findAll()[0];
                 // Un fois récupere j'extrait les informations
                 $carrier = [
@@ -291,12 +293,9 @@ class CartService {
                     "name" => $carrier->getName(),
                     "description" => $carrier->getDescription(),
                     "price" => $carrier->getPrice()
-                ];
-                
+                ];               
                 // Je récupere via la session les transporteur 
                 $this->update("carrier", $carrier);
-
-            // $carrier = $this->update("carrier", $carrier);
         }
 
         $result["carrier"] = $carrier;

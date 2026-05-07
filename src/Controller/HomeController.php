@@ -79,11 +79,13 @@ final class HomeController extends AbstractController
        
        
         // Je stocke les données dans la session
-        $session->set("setting", $data[0]);
-
+        $session->set("setting", $data[0] ?? null);
+        
+        // Je stocke les données dans la session
+        // $session->set("setting", !empty($data) ? reset($data) : null);
+        
         $headerPages = $pageRepo->findBy(['isHead' => true]);
         $footerPages = $pageRepo->findBy(['isFoot' => true]);
-
 
         // Je stocke les pages dans la session isHead et isFoot, isMega le gros menu haut
         $session->set("headerPages",  $headerPages); // isHead le haut
